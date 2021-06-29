@@ -1,0 +1,44 @@
+{
+  "name": "fzgang-node-template",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node bin/www",
+    "dev": "cross-env NODE_ENV=development ./node_modules/.bin/nodemon bin/www",
+    "prd": "pm2 start bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "amqplib": "0.7.1",
+    "axios": "0.21.1",
+    "crypto-js": "4.0.0",
+    "datalize": "0.3.4",
+    "dayjs": "1.10.5",
+    "debug": "4.1.1",
+    "dotenv": "8.2.0",
+    "ioredis": "4.24.5",
+    "jsonwebtoken": "8.5.1",
+    "koa": "2.7.0",
+    "koa-body": "4.2.0",
+    "koa-convert": "1.2.0",
+    "koa-json": "2.0.2",
+    "koa-jwt": "3.6.0",
+    "koa-router": "7.4.0",
+    "koa-static": "5.0.0",
+    "koa2-cors": "2.0.6",
+    "log4js": "6.3.0",
+    "mysql2": "2.2.5",
+    "nacos": "2.0.0",
+    "png-to-ico": "^2.1.2",
+    "sequelize": "5.21.10",
+    "socket.io": "2.2.0",
+    "socket.io-redis": "5.4.0",
+    "ssh2": "0.8.9",
+    "user-agents": "1.0.697",
+    "utf8": "^3.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.7"
+  }
+}
