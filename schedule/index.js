@@ -27,11 +27,11 @@ const scheduleNode = (app)=>{
 }
 const scheduleToad = (app)=>{
     const scheduler = new ToadScheduler()
-    const getServiceStatusTask = new AsyncTask('getServiceStatus',async ()=>{
-        return await getServiceStatus()
+    const getServiceStatusTask = new AsyncTask('getServiceStatus', ()=>{
+        return getServiceStatus()
     },(err) => {})
-    const setServiceStatusTask = new AsyncTask('setServiceStatus',async()=>{
-        return await setServiceStatus(app)
+    const setServiceStatusTask = new AsyncTask('setServiceStatus',()=>{
+        return setServiceStatus(app)
     },(err) => {})
     const job1 = new SimpleIntervalJob({ seconds: 10, }, getServiceStatusTask)
     const job2 = new SimpleIntervalJob({ seconds: 30, }, setServiceStatusTask)
