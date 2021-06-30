@@ -1,7 +1,7 @@
 apps:
     - script   : './bin/www'
       args    : ['env']
-      cwd    : '/node/fzgang-galaxy-manage'
+      cwd    : '/node'
       name     : 'fzgang-galaxy-manage'
       instances: 1
       exec_mode: fork
