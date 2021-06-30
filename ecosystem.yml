@@ -1,0 +1,13 @@
+apps:
+    - script   : './bin/www'
+      args    : ['env']
+      cwd    : '/node/fzgang-galaxy-manage'
+      name     : 'fzgang-galaxy-manage'
+      instances: 1
+      exec_mode: fork
+      env: 
+      log_date_format: "YYYY-MM-DD HH:mm Z"
+      error_file: "/var/log/pm2/fzgang-galaxy-manage/app-err.log"
+      out_file: "/var/log/pm2/fzgang-galaxy-manage/app-out.log"
+      combine_logs: false
+      ignore_watch: ["node_modules","logs"]

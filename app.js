@@ -22,6 +22,10 @@ const loggers = require('./middleware/loggers')
 const { initPlugin } = require('./plugin');
 // 注册插件
 initPlugin(app)
+// 定时任务订阅
+const {scheduleToad,scheduleNode} = require('./schedule/index')
+scheduleNode(app)
+scheduleToad(app)
 // middlewares
 app.use(cors());//允许跨域
 app.use(loggers());// 本地log
