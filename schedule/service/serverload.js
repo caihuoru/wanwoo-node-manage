@@ -51,7 +51,7 @@ module.exports = {
             })
         })
     },
-    setServiceStatus: async(app)=>{
+    setServiceStatus: (app)=>{
         return new Promise((resolve, reject)=>{
             redisStore.get('system:node:status').then(systemStatus=>{
                 app.context.CheckSystem.emit('system-status',systemStatus)
