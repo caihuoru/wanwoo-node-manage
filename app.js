@@ -44,10 +44,14 @@ app.use(koajwt({
   secret: global.JWT_TOKEN
 }).unless({
   path: [
+    /^\/upload/,
+    /^\/img/,
     /^\/v1\/public/,
     /^\/v1\/assetmanage/,
-    /^\/v1\/northport/,
+    /^\/v1\/work/,
+    /^\/v1\/northport\/manage/,
     /^\/v1\/webhook/,
+    /^\/v2\/public/,
   ]
 }))
 app.use(require('koa-static')(__dirname + '/public'))

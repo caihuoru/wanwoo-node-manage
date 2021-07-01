@@ -16,7 +16,7 @@ module.exports = {
             where:Filter,
             //offet去掉前多少个数据
             offset,
-            attributes: ['id','ip','remarks'],
+            attributes: ['id','ip','accesscert','isOpen', 'certTime','remarks'],
             //limit每页数据数量
             limit: Number(pageSize)
         })
