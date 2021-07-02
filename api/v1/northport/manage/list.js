@@ -46,6 +46,7 @@ router
 .post('/edit',datalize([
   field('id').required(), //ip
   field('ip').required().isIp(), //ip
+  field('isOpen').required(), //ip
   field('accesscert'), //访问凭证
   field('certTime') //凭证有效时间
 ]),async (ctx, next) => {

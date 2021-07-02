@@ -49,9 +49,9 @@ module.exports = {
         ctx.success({})
     },
     editIpInfo:async (ctx, next)=>{
-        const {id,ip,accesscert,certTime} = ctx.request.body
+        const {id,ip,accesscert,certTime,isOpen} = ctx.request.body
         const ipInfo =  await ctx.db.NorthPortList.update({
-            id,ip,accesscert,certTime
+            id,ip,accesscert,certTime,isOpen
         },
             {
                 where: { id }
