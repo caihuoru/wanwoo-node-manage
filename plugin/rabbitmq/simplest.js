@@ -10,26 +10,29 @@
 const amqp = require('amqplib')
 const logUtil = require('../log4j');
 const fs = require('fs');
+const config = require('../../config')
+
 class SimplestMq{
     constructor() {
         this.opts = {
-            cert: [fs.readFileSync(global.RABBITMQ_CERTFILEPATH)],      // client cert
-            key: [fs.readFileSync(global.RABBITMQ_KEYFILEPATH)],        // client key
-            passphrase: global.RABBITMQ_PASSPHRASE, // passphrase for key
-            ca: [fs.readFileSync(global.RABBITMQ_CAFILEPATH)],            // array of trusted CA certs
+            cert: [fs.readFileSync(config.RABBITMQ_CERTFILEPATH)],      // client cert
+            key: [fs.readFileSync(config.RABBITMQ_KEYFILEPATH)],        // client key
+            passphrase: config.RABBITMQ_PASSPHRASE, // passphrase for key
+            ca: [fs.readFileSync(config.RABBITMQ_CAFILEPATH)],            // array of trusted CA certs
             rejectUnauthorized: false
         }
+        
         this.open = amqp.connect({
-            protocol: global.RABBITMQ_PROTOCOL,
-            hostname: global.RABBITMQ_HOSTNAME,
-            port: global.RABBITMQ_PORT,
-            username: global.RABBITMQ_USERNAME,
-            password: global.RABBITMQ_PASSWORD,
-            locale: global.RABBITMQ_LOCALE,
-            frameMax: global.RABBITMQ_FRAMEMAX,
-            heartbeat: global.RABBITMQ_HEARTBEAT,
-            vhost: global.RABBITMQ_VHOST
-        },global.RABBITMQ_SSl?this.opts:null).catch(error=>{
+            protocol: config.RABBITMQ_PROTOCOL,
+            hostname: config.RABBITMQ_HOSTNAME,
+            port: config.RABBITMQ_PORT,
+            username: config.RABBITMQ_USERNAME,
+            password: config.RABBITMQ_PASSWORD,
+            locale: config.RABBITMQ_LOCALE,
+            frameMax: config.RABBITMQ_FRAMEMAX,
+            heartbeat: config.RABBITMQ_HEARTBEAT,
+            vhost: config.RABBITMQ_VHOST
+        },config.RABBITMQ_SSl?this.opts:null).catch(error=>{
             logUtil.pluginLogger.error('RabbitMq','connect',JSON.stringify(error))
         })
     }

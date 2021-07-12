@@ -4,14 +4,16 @@
  */
 const Redis = require('ioredis');
 const logUtil = require('./log4j');
+const config = require('../config')
+
 class RedisStore {
     constructor() {
         this.redis = new Redis({
-            port: global.RD_PORT, // Redis port
-            host: global.RD_HOST, // Redis host
-            family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
-            password: global.RD_PASSWORD,
-            db: global.RD_DB,
+            port: config.RD_PORT, // Redis port
+            host: config.RD_HOST, // Redis host
+            family: config.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
+            password: config.RD_PASSWORD,
+            db: config.RD_DB,
             retryStrategy(times){
               const delay = Math.min(times * 50, 2000);
               return delay;

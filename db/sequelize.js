@@ -4,11 +4,13 @@
  * 多表联查
  * https://itbilu.com/nodejs/npm/EJarwPD8W.html#relation
  */
+ const config = require('../config')
+
 const { Sequelize } = require('sequelize');
 const logUtil = require('../plugin/log4j')
-const sequelize = new Sequelize(global.DB_NAME,global.DB_USER,global.DB_PASSWORD,{
-    host: global.DB_HOST,
-    port: global.DB_PORT,
+const sequelize = new Sequelize(config.DB_NAME,config.DB_USER,config.DB_PASSWORD,{
+    host: config.DB_HOST,
+    port: config.DB_PORT,
     dialect:'mysql',
     logging: log,
     dialectOptions: {
