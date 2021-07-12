@@ -16,7 +16,7 @@ module.exports = {
             where:Filter,
             //offet去掉前多少个数据
             offset,
-            attributes: ['id','ip','remarks'],
+            attributes: ['id','ip','accesscert','isOpen', 'certTime','remarks'],
             //limit每页数据数量
             limit: Number(pageSize)
         })
@@ -33,7 +33,7 @@ module.exports = {
         const Filter = { id:  id } //精准查询
         const idInfo = await ctx.db.NorthPortList.findAll({
             where: Filter,
-            attributes: ['id','ip','accesscert','certTime','remarks'],
+            attributes: ['id','ip','accesscert','certTime','remarks','isOpen'],
         })
         console.log(idInfo)
         if(idInfo?.length){
@@ -49,9 +49,9 @@ module.exports = {
         ctx.success({})
     },
     editIpInfo:async (ctx, next)=>{
-        const {id,ip,accesscert,certTime} = ctx.request.body
+        const {id,ip,accesscert,certTime,isOpen,remarks} = ctx.request.body
         const ipInfo =  await ctx.db.NorthPortList.update({
-            id,ip,accesscert,certTime
+            id,ip,accesscert,certTime,isOpen,remarks
         },
             {
                 where: { id }
