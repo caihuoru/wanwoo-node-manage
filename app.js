@@ -46,6 +46,7 @@ app.use(koajwt({
   path: [
     /^\/upload/,
     /^\/img/,
+    /^\/warning_voice/,
     /^\/v1\/public/,
     /^\/v1\/assetmanage/,
     /^\/v1\/work/,
