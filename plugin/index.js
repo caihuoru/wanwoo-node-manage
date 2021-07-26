@@ -11,7 +11,7 @@ const axios = require('./axios');
 module.exports={
     initPlugin: async(app)=>{
         // 初始化
-        redisStore.set('system:node:status',{status:'NORMAL',data:{},message:'系统启动成功!'})
+        redisStore.set('system:status',{status:'NORMAL',data:{},message:'系统启动成功!'})
         // 插件注入
         app.context.redisStore = redisStore
         //  ------------ 队列 -------------

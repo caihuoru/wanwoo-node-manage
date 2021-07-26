@@ -9,14 +9,14 @@ module.exports = {
         //客户端ip
         logText += "request client ip:  " + req.ip + "\n";
         //开始时间
-        let startTime;
+        // let startTime;
         //请求参数
         if (method === 'GET') {
             logText += "request query:  " + JSON.stringify(req.query) + "\n";
-            startTime = req.requestStartTime || req.query.requestStartTime ;
+            // startTime = req.query.requestStartTime || req.requestStartTime;
         } else {
             logText += "request body: " + "\n" + JSON.stringify(req.body) + "\n";
-            startTime = req.requestStartTime || req.body.requestStartTime;
+            // startTime = req.body.requestStartTime || req.requestStartTime;
         }
         //服务器响应时间
         logText += "response time: " + resTime + "ms\n";

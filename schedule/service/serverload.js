@@ -27,25 +27,25 @@ module.exports = {
                      * UNKNOWN 未知状态 只要是断电重启状态的场景，都是未知；UI展示为“系统服务启动中”
                      * UPDATE 升级状态，仅升级控制器组件时使用；UI展示为“系统升级中”
                      */
-                     return redisStore.get('system:node:status').then(resStatus=>{
+                     return redisStore.get('system:status').then(resStatus=>{
                         if(resStatus?.status != 'UPDATE'){
                             if(serverList.length == 0){
-                                redisStore.set('system:node:status',{status:'NORMAL',data:{},message:'系统启动成功!'})
+                                redisStore.set('system:status',{status:'NORMAL',data:{},message:'系统启动成功!'})
                             }else{
-                                redisStore.set('system:node:status',{status:'ERROE',data:{},message:'有关键服务('+serverList.join(',')+')没有启动!'})
+                                redisStore.set('system:status',{status:'ERROE',data:{},message:'有关键服务('+serverList.join(',')+')没有启动!'})
                             }
                         }else{
                             if(resStatus?.status == 'UPDATE'){
-                                redisStore.set('system:node:status',{status:'UPDATE',data:{},message:'系统升级中!'})
+                                redisStore.set('system:status',{status:'UPDATE',data:{},message:'系统升级中!'})
                             }else{
-                                redisStore.set('system:node:status',{status:'NORMAL',data:{},message:'系统启动成功!'})
+                                redisStore.set('system:status',{status:'NORMAL',data:{},message:'系统启动成功!'})
                             }
                             
                         }
                     })
                 }else{
                     //服务错误
-                    redisStore.set('system:node:status',{status:'ERROE',data:{},message:JSON.stringify(result)})
+                    redisStore.set('system:status',{status:'ERROE',data:{},message:JSON.stringify(result)})
                 }
                 resolve('1')
             })
@@ -53,7 +53,7 @@ module.exports = {
     },
     setServiceStatus: (app)=>{
         return new Promise((resolve, reject)=>{
-            redisStore.get('system:node:status').then(systemStatus=>{
+            redisStore.get('system:status').then(systemStatus=>{
                 app.context.CheckSystem.emit('system-status',systemStatus)
                 resolve('1')
             })

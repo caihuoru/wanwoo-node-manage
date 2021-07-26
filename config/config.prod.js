@@ -32,10 +32,10 @@ module.exports = {
     RABBITMQ_HEARTBEAT:0,
     RABBITMQ_VHOST:"/",
     RABBITMQ_SSl:true,
-    RABBITMQ_CERTFILEPATH:"./ssl/rabbitmq/server_certificate.pem",
-    RABBITMQ_KEYFILEPATH:"./ssl/rabbitmq/server_key.pem",
+    RABBITMQ_CERTFILEPATH:"/ssl/rabbitmq/server_certificate.pem",
+    RABBITMQ_KEYFILEPATH:"/ssl/rabbitmq/server_key.pem",
     RABBITMQ_PASSPHRASE:"Wanwoo@123",
-    RABBITMQ_CAFILEPATH:"./ssl/rabbitmq/ca_certificate.pem",
-    HTTPS_KEY:"./ssl/https/webserver.key",
-    HTTPS_CERT:"./ssl/https/webserver.crt"
+    RABBITMQ_CAFILEPATH:"/ssl/rabbitmq/ca_certificate.pem",
+    HTTPS_KEY:"/ssl/https/webserver.key",
+    HTTPS_CERT:"/ssl/https/webserver.crt"
 };
