@@ -4,8 +4,6 @@
  */
 const Redis = require('ioredis');
 const logUtil = require('./log4j');
-const config = require('../config')
-
 class RedisStore {
   constructor() {
     try {
@@ -45,9 +43,6 @@ class RedisStore {
         logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
       }
     } catch (error) {
-     
-      console.log('**************', global.REDIS_MEMBERS)
-      console.log('=============',error)
       logUtil.pluginLogger.info('Redis', 'connect', error.message)
     }
     this.redis.connect(() => {

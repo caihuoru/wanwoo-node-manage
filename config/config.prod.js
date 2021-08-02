@@ -1,5 +1,5 @@
 module.exports = {
-    isRemoteConfig:false,
+    isRemoteConfig:true,
     isHTTPS:false,
     APP_PORT:18701,
     isSOCKET:false,

@@ -9,7 +9,10 @@ module.exports = {
         const content = await configClient.getConfig(config.NACOS_CONFIG, config.NACOS_GROUP_NAME);
         const processConfig = JSON.parse(content)
         for (const k in processConfig ) {
+<<<<<<< HEAD
           
+=======
+>>>>>>> d6d28f8314eb2d2a3b43eee4306ed2a31732aa3a
           global[k] = processConfig[k]
         }
     },
