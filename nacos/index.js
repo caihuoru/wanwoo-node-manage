@@ -6,10 +6,10 @@ module.exports = {
         const configClient = new NacosConfigClient({
             serverAddr: config.NACOS_IP
         });
-        const content = await configClient.getConfig(config.NACOS_CONFIG, config.NACOS_NAME_SPACE);
+        const content = await configClient.getConfig(config.NACOS_CONFIG, config.NACOS_GROUP_NAME);
         const processConfig = JSON.parse(content)
         for (const k in processConfig ) {
-          config[k] = processConfig[k]
+          global[k] = processConfig[k]
         }
     },
     initNacosInstance:async ()=>{
