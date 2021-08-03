@@ -31,13 +31,11 @@ class RedisStore {
            
           }
         })
-        console.log('**************', MEMBERS)
         if(MEMBERS.length===1){
           this.redis = new Redis({...MEMBERS[0],...basicConf});
         }else{
           this.redis =  new Redis.Cluster(MEMBERS,basicConf);
         }
-        
         
       } else {
         logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
