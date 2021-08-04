@@ -6,6 +6,7 @@ const IO = require('socket.io')
 const {createNewServer} = require('./sshService')
 const redisAdapter = require("socket.io-redis");
 const {redisStore} = require('../plugin/redis');
+const logUtil = require('../plugin/log4j');
 
 function creatSocket(app,koa) {
   /**
@@ -16,12 +17,26 @@ function creatSocket(app,koa) {
       path:'/socketnode/checksocket/',
       pingTimeout: 180000, 
       pingInterval: 25000
-  }).adapter(redisAdapter({
-    port: global.RD_PORT, // Redis port
-    host: global.RD_HOST, // Redis host
-    family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
-  }))
-
+  })
+  if (Array.isArray(global.REDIS_MEMBERS)) {
+    const MEMBERS =  global.REDIS_MEMBERS.map(irm => {
+      return {
+        port: irm.port, // Redis port
+        host: irm.host, // Redis host
+        family: global.RD_FAMILY,
+        password: global.RD_PASSWORD
+      }
+    })
+    if(MEMBERS.length===1){
+      koa.context.CheckSystem.adapter(redisAdapter(MEMBERS[0]))
+    }else{
+      const pubClient =  new Redis.Cluster(MEMBERS);
+      const subClient = pubClient.duplicate();
+      koa.context.CheckSystem.adapter(redisAdapter(pubClient, subClient))
+    }
+  }else{
+    logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
+  }
   koa.context.CheckSystem.on("connection", async function(clientSocket) {
       console.log('用户开始进场：',clientSocket.id)
       const systemStatus = await redisStore.get('system:status')
@@ -38,11 +53,26 @@ function creatSocket(app,koa) {
       path:'/socketnode/ssh',
       pingTimeout: 180000, 
       pingInterval: 25000
-  }).adapter(redisAdapter({
-    port: global.RD_PORT, // Redis port
-    host: global.RD_HOST, // Redis host
-    family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
-  }))
+  })
+  if (Array.isArray(global.REDIS_MEMBERS)) {
+    const MEMBERS =  global.REDIS_MEMBERS.map(irm => {
+      return {
+        port: irm.port, // Redis port
+        host: irm.host, // Redis host
+        family: global.RD_FAMILY,
+        password: global.RD_PASSWORD
+      }
+    })
+    if(MEMBERS.length===1){
+      koa.context.CheckSystem.adapter(redisAdapter(MEMBERS[0]))
+    }else{
+      const pubClient =  new Redis.Cluster(MEMBERS);
+      const subClient = pubClient.duplicate();
+      koa.context.CheckSystem.adapter(redisAdapter(pubClient, subClient))
+    }
+  }else{
+    logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
+  }
   // 每个客户端socket连接时都会触发 connection 事件
   sshService.on("connection", function(clientSocket) {
         console.log('sshService新用户进场',clientSocket.id)
