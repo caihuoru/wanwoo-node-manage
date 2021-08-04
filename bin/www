@@ -11,6 +11,10 @@ const https = require('https');
 const debug = require('debug')('demo:server');
 const config = require('../config');
 (async ()=>{
+    //先使用本地赋值
+    for (const k in config) {
+      global[k] = config[k]
+    }
     //获取当前ip及hostName
     global.localIP = getLocalIP().ip
     global.localHostName = getLocalIP().hostName
@@ -18,14 +22,10 @@ const config = require('../config');
      * 选择是否使用远程配置
      */
     const {initNacosConfig,initNacosInstance} = require('../nacos');
-    await initNacosInstance(); //注册nacos
     if(config.isRemoteConfig){
         await initNacosConfig(); //使用远程配置
-    }else{
-        for (const k in config ) { //使用本地配置
-            global[k] = config[k] 
-        }
     }
+    await initNacosInstance(); //注册nacos
     // 创建服务
     const app = require('../app');
     // 服务使用端口
