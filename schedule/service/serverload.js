@@ -1,5 +1,5 @@
 const { get } = require('../../plugin/axios')
-const { redisStore } = require('../../plugin/redis');
+const { redisStore,redisSocket } = require('../../plugin/redis');
 module.exports = {
     getServiceStatus: ()=>{
         return new Promise((resolve, reject)=>{
@@ -54,7 +54,8 @@ module.exports = {
     setServiceStatus: (app)=>{
         return new Promise((resolve, reject)=>{
             redisStore.get('system:status').then(systemStatus=>{
-                app.context.CheckSystem.emit('system-status',systemStatus)
+                redisSocket.emit('system-status',systemStatus)
+                // app.context.CheckSystem.emit('system-status',systemStatus)
                 resolve('1')
             })
         })

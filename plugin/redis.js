@@ -4,6 +4,7 @@
  */
 const Redis = require('ioredis');
 const logUtil = require('./log4j');
+const { Emitter } = require("@socket.io/redis-emitter")
 class RedisStore {
   constructor() {
     try {
@@ -35,6 +36,7 @@ class RedisStore {
         } else {
           this.redis = new Redis.Cluster(MEMBERS, {
             clusterRetryStrategy: basicConf.retryStrategy,
+            enableReadyCheck: false,
             redisOptions: {
               reconnectOnError: basicConf.reconnectOnError,
               family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
@@ -96,6 +98,8 @@ class RedisStore {
   }
 }
 let redisStore = new RedisStore()
+const redisSocket = new Emitter(redisStore.redis);
 module.exports = {
-  redisStore: redisStore
+  redisStore: redisStore,
+  redisSocket: redisSocket
 }

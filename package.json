@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@socket.io/redis-emitter": "^4.1.0",
     "amqplib": "0.7.1",
     "axios": "0.21.1",
     "crypto-js": "4.0.0",
