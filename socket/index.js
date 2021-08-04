@@ -24,7 +24,7 @@ function creatSocket(app,koa) {
         port: irm.port, // Redis port
         host: irm.host, // Redis host
         family: global.RD_FAMILY,
-        password: global.RD_PASSWORD
+        db: global.RD_DB
       }
     })
     if(MEMBERS.length===1){

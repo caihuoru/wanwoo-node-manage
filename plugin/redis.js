@@ -9,9 +9,6 @@ class RedisStore {
     try {
       const REDIS_MEMBERS = global.REDIS_MEMBERS
       const basicConf = {
-        family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
-        password: global.RD_PASSWORD,
-        db: global.RD_DB,
         retryStrategy(times) {
           const delay = Math.min(times * 50, 2000);
           return delay;
@@ -28,7 +25,8 @@ class RedisStore {
           return {
             port: irm.port, // Redis port
             host: irm.host, // Redis host
-           
+            family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
+            db: global.RD_DB,
           }
         })
         if(MEMBERS.length===1){
