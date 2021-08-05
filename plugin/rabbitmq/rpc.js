@@ -30,12 +30,27 @@ class RpcMq{
         return new Promise(async (resolve,reject)=>{
             const rabbitConn = await self.open
             const rabbitChannel = await rabbitConn.createChannel()
+            const rabbitQueue = await rabbitChannel.assertExchange('e_direct_dc_galaxy', 'direct', { durable: true })
+            console.log(rabbitQueue)
+            rabbitChannel.publish('e_direct_dc_galaxy', 'red', Buffer.from(`red msg`))
             // const rabbitQueue = await rabbitChannel.bindExchange(queueName,correlationId, { durable: 'true' })
-            console.log('rabbitChannel',rabbitChannel)
-            rabbitChannel.publish(queueName,'',Buffer.from(JSON.stringify(data)),{ durable: 'true' },function(err, ok){
-                console.log(err,ok)
-                resolve({})
-            })
+            // console.log('rabbitChannel',rabbitChannel)
+            // rabbitChannel.publish(queueName,'',Buffer.from(JSON.stringify(data)),'direct',{ durable: 'true' },function(err, ok){
+            //     console.log(err,ok)
+            //     resolve({})
+            // })
+            // rabbitChannel.consume(rabbitQueue.queue,(msg)=>{
+            //     if(msg.properties.correlationId == correlationId){
+            //         resolve(msg.content.toString())
+            //         rabbitChannel.close()
+            //     }
+            // },{
+            //     noAck: true
+            // })
+            // rabbitChannel.sendToQueue('rpc_queue',Buffer.from(JSON.stringify(data)),{
+            //     correlationId: correlationId, 
+            //     replyTo: rabbitQueue.queue
+            // })
             // console.log(rabbitChannel)
             // const rabbitQueue = await rabbitChannel.assertQueue(queueName, {durable: true});
             // rabbitChannel.consume(queueName,(msg)=>{

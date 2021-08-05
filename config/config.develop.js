@@ -5,7 +5,7 @@ module.exports = {
     APP_PORT:18701,
     isSOCKET:false,
     APP_COOKIE:"nodeManageToken",
-    NACOS_IP:"172.18.5.105:18679",
+    NACOS_IP:"172.18.5.125:18679",
     NACOS_NAME_SPACE:"public",
     NACOS_SERVICE_NAME:"fzgang-node-manage",
     NACOS_GROUP_NAME:"DEFAULT_GROUP",
@@ -15,13 +15,13 @@ module.exports = {
     HTTPS_KEY:"./ssl/https/webserver.key",	//https证书秘钥
     HTTPS_CERT:"./ssl/https/webserver.crt",	//https证书
     //如果启用本地配置
-    DB_HOST: "172.18.5.105",
+    DB_HOST: "172.18.5.125",
     DB_NAME: "Galaxy",
     DB_PORT: "13361",
     DB_USER: "root",
     DB_PASSWORD: "123456",
     DB_UNSECURE: true,
-    RABBITMQ_HOSTNAME: "172.18.5.105",
+    RABBITMQ_HOSTNAME: "172.18.5.125",
     RABBITMQ_PORT: 18673,
     RABBITMQ_USERNAME: "admin",
     RABBITMQ_PASSWORD: "Wanwoo@123",
@@ -38,5 +38,5 @@ module.exports = {
 	RD_FAMILY: 4,
     RD_PASSWORD: "",
     RD_DB: 0,
-    REDIS_MEMBERS:[ {"port":18671,"host":"172.18.5.105"}]
+    REDIS_MEMBERS:[ {"port":18671,"host":"172.18.5.125"}]
 };
