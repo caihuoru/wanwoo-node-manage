@@ -38,11 +38,7 @@ module.exports = {
 	RD_FAMILY: 4,
     RD_PASSWORD: "",
     RD_DB: 0,
-    RD_SENTINELS: [
-        { host: '172.18.100.180', port: 17671 },
-        { host: '172.18.100.181', port: 17671 },
-        { host: '172.18.100.182', port: 17671 }
-    ],
     RD_NAME: 'wanwoomaster',
-    REDIS_MEMBERS:[ {"port":18671,"host":"172.18.5.105"}]
+    REDIS_MEMBERS:[ {"port":18671,"host":"172.18.5.105"}],
+    REDIS_TEYP: 'standalone'
 };

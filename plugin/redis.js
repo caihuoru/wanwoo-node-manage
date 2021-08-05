@@ -13,8 +13,6 @@ class RedisStore {
         family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
         password: global.RD_PASSWORD,
         db: global.RD_DB,
-        sentinels: global.RD_SENTINELS,
-        name: global.RD_NAME,
         retryStrategy(times) {
           const delay = Math.min(times * 50, 2000);
           return delay;
@@ -26,30 +24,57 @@ class RedisStore {
           }
         }
       }
-      if (Array.isArray(REDIS_MEMBERS)) {
-        const MEMBERS = REDIS_MEMBERS.map(irm => {
-          return {
-            port: irm.port, // Redis port
-            host: irm.host, // Redis host
-          }
-        })
-        if (MEMBERS.length === 1) {
-          this.redis = new Redis({ ...MEMBERS[0], ...basicConf });
-        } else {
-          this.redis = new Redis.Cluster(MEMBERS, {
-            clusterRetryStrategy: basicConf.retryStrategy,
-            enableReadyCheck: false,
-            redisOptions: {
-              reconnectOnError: basicConf.reconnectOnError,
-              family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
+        if (Array.isArray(REDIS_MEMBERS)) {
+          const MEMBERS = REDIS_MEMBERS.map(irm => {
+            return {
+              port: irm.port, // Redis port
+              host: irm.host, // Redis host
+            }
+          })
+        //   // 单机
+        //   if (MEMBERS.length === 1) {
+        //     this.redis = new Redis({ ...MEMBERS[0], ...basicConf });
+        //   } else {
+        //     // 集群
+        //     this.redis = new Redis.Cluster(MEMBERS, {
+        //       clusterRetryStrategy: basicConf.retryStrategy,
+        //       enableReadyCheck: false,
+        //       redisOptions: {
+        //         reconnectOnError: basicConf.reconnectOnError,
+        //         family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
+        //         password: global.RD_PASSWORD,
+        //         db: global.RD_DB,
+        //       }
+        //     });
+        //   }
+      
+          if(global.REDIS_TEYP === 'standalone'){
+            // 单机
+            this.redis = new Redis({ ...MEMBERS[0], ...basicConf });
+          } else if(global.REDIS_TEYP === 'cluster') {
+            // 集群
+            this.redis = new Redis.Cluster(MEMBERS, {
+              clusterRetryStrategy: basicConf.retryStrategy,
+              enableReadyCheck: false,
+              redisOptions: {
+                reconnectOnError: basicConf.reconnectOnError,
+                family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
+                password: global.RD_PASSWORD,
+                db: global.RD_DB,
+              }
+            });
+          }else if(global.REDIS_TEYP === 'sentinel') {
+            this.redis = new Redis({
+              family: global.RD_FAMILY, 
               password: global.RD_PASSWORD,
               db: global.RD_DB,
-            }
-          });
-        }
+              sentinels: REDIS_MEMBERS,
+              name: global.RD_NAME,
+            });
+          } else {
+            logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
+          }
 
-      } else {
-        logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
       }
     } catch (error) {
       logUtil.pluginLogger.info('Redis', 'connect', error.message)
