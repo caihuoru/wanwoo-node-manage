@@ -40,5 +40,6 @@ module.exports = {
     RD_DB: 0,
     RD_NAME: 'wanwoomaster',
     REDIS_MEMBERS:[ {"port":18671,"host":"127.0.0.1"}],
+    // 三种接入模式：standalone（单机模式）,sentinel(哨兵模式)， cluster(集群模式)，默认是standalone
     REDIS_TEYP: 'standalone'
 };

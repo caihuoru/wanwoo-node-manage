@@ -64,6 +64,7 @@ class RedisStore {
               }
             });
           }else if(global.REDIS_TEYP === 'sentinel') {
+            // 哨兵
             this.redis = new Redis({
               family: global.RD_FAMILY, 
               password: global.RD_PASSWORD,
