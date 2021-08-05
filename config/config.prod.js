@@ -35,8 +35,11 @@ module.exports = {
     RABBITMQ_KEYFILEPATH: "/ssl/rabbitmq/server_key.pem",
     RABBITMQ_PASSPHRASE:"Wanwoo@123",
     RABBITMQ_CAFILEPATH: "/ssl/rabbitmq/ca_certificate.pem",
-	RD_FAMILY: 4,
+    RD_FAMILY: 4,
     RD_PASSWORD: "",
     RD_DB: 0,
-    REDIS_MEMBERS:[ {"port":18671,"host":"127.0.0.1"}]
+    RD_NAME: 'wanwoomaster',
+    REDIS_MEMBERS:[ {"port":18671,"host":"127.0.0.1"}],
+    // 三种接入模式：standalone（单机模式）,sentinel(哨兵模式)， cluster(集群模式)，默认是standalone
+    REDIS_TEYP: 'standalone'
 };
