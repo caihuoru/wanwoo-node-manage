@@ -13,6 +13,8 @@ class RedisStore {
         family: global.RD_FAMILY, // 4 (IPv4) or 6 (IPv6)
         password: global.RD_PASSWORD,
         db: global.RD_DB,
+        sentinels: global.RD_SENTINELS,
+        name: global.RD_NAME,
         retryStrategy(times) {
           const delay = Math.min(times * 50, 2000);
           return delay;
