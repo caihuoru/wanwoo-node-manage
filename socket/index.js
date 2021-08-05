@@ -15,14 +15,14 @@ function creatSocket(app,koa) {
   koa.context.CheckSystem = IO(app,{
       origin: "*.*",
       path:'/socketnode/checksocket/',
-      transports: ['websocket'],
+      transports: ['polling', 'websocket'],
       pingTimeout: 180000, 
       pingInterval: 25000,
-      cors: { 
-        origin: "*.*", 
-        methods: [ "GET" , "POST" ], 
-        credentials: true
-      }
+      // cors: { 
+      //   origin: "*.*", 
+      //   methods: [ "GET" , "POST" ], 
+      //   credentials: true
+      // }
   })
   if (Array.isArray(global.REDIS_MEMBERS)) {
     // const MEMBERS =  global.REDIS_MEMBERS.map(irm => {
@@ -65,14 +65,14 @@ function creatSocket(app,koa) {
   const sshService = IO(app,{
       origin: "*.*",
       path:'/socketnode/ssh',
-      transports: ['websocket'],
+      transports: ['polling', 'websocket'],
       pingTimeout: 180000, 
       pingInterval: 25000,
-      cors: { 
-        origin: "*.*", 
-        methods: [ "GET" , "POST" ], 
-        credentials: true
-      }
+      // cors: { 
+      //   origin: "*.*", 
+      //   methods: [ "GET" , "POST" ], 
+      //   credentials: true
+      // }
   })
   if (Array.isArray(global.REDIS_MEMBERS)) {
     // const MEMBERS =  global.REDIS_MEMBERS.map(irm => {
