@@ -5,6 +5,7 @@ const { redisStore,redisSocket } = require('./redis');
 const { simplestMq } = require('./rabbitmq/simplest');
 const { workqueuetMq } = require('./rabbitmq/workqueue');
 const { pubsubMq } = require('./rabbitmq/pubsub');
+const { rpcMq } = require('./rabbitmq/rpc');
 const logUtil = require('./log4j');
 const db = require('../db/sequelize')
 const axios = require('./axios');
@@ -21,6 +22,8 @@ module.exports={
         app.context.workqueuetMq = workqueuetMq
         // 订阅发布
         app.context.pubsubMq = pubsubMq
+        // RPC模式
+        app.context.rpcMq = rpcMq
         // 日志
         app.context.logUtil = logUtil
         app.context.axios = axios

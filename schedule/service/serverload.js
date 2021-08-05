@@ -54,8 +54,8 @@ module.exports = {
     setServiceStatus: (app)=>{
         return new Promise((resolve, reject)=>{
             redisStore.get('system:status').then(systemStatus=>{
-                redisSocket.emit('system-status',systemStatus)
-                // app.context.CheckSystem.emit('system-status',systemStatus)
+                // redisSocket.emit('system-status',systemStatus)
+                app.context.CheckSystem.emit('system-status',systemStatus)
                 resolve('1')
             })
         })
