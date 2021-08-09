@@ -6,7 +6,8 @@ module.exports = {
 
         const { ip, body } = ctx.request
         const visitIp = ip.replace('::ffff:', '');
-        let LOCK_DATA = await ctx.redisStore.get('SYSTEM_UPDATE_LOCK_DATA')
+        let LOCK_DATA = await ctx.redisStore.get('system:updatelock:data')
+        console.log(LOCK_DATA)
         const fileNameArr = ctx.request.files.file.name.split('.')
         const chunkDir = `./public/share/temp/${fileNameArr[0]}`
         const NEW_LOCK_DATA = {
@@ -20,12 +21,12 @@ module.exports = {
            
             if (LOCK_DATA.type == body.type) {
                 console.log('*******************************',LOCK_DATA)
-                if (LOCK_DATA.userId != body.userid) {
+                if (LOCK_DATA?.userId != body.userid) {
                     // 有用户正在升级,锁定
                     ctx.fail('上传失败', 50001, '已存在升级上传任务，请稍后重试！')
                     return
                 } else {
-                    if (LOCK_DATA.visitIp != visitIp && fse.existsSync(chunkDir)) {
+                    if (LOCK_DATA?.visitIp != visitIp && fse.existsSync(chunkDir)) {
                         // ip发生变化，清空重新上传
                         await fse.remove(chunkDir)
                     }
@@ -38,7 +39,7 @@ module.exports = {
         } else if (body.index !== '0') {
             ctx.fail('上传失败', 50001, '任务已过期，请重新上传')
         }
-        ctx.redisStore.set('SYSTEM_UPDATE_LOCK_DATA', NEW_LOCK_DATA, NEW_LOCK_DATA.type, 3600 * 24)
+        ctx.redisStore.set('system:updatelock:data', NEW_LOCK_DATA, 'EX', 3600 * 24)
         if (!fse.existsSync(chunkDir)) {// 没有目录就创建目录
             await fse.mkdirs(chunkDir)
         }

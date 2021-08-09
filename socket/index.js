@@ -25,29 +25,22 @@ function creatSocket(app,koa) {
       // }
   })
   if (Array.isArray(global.REDIS_MEMBERS)) {
-    // const MEMBERS =  global.REDIS_MEMBERS.map(irm => {
-    //   return {
-    //     port: irm.port, // Redis port
-    //     host: irm.host, // Redis host
-    //     family: global.RD_FAMILY,
-    //     db: global.RD_DB
-    //   }
-    // })
-    // if(MEMBERS.length===1){
-    //   koa.context.CheckSystem.adapter(
-    //     redisAdapter({
-    //       pubClient: redisStore.redis, 
-    //       subClient: redisStore.redis.duplicate()
-    //     })
-    //   );
-    // }else{
-    //   koa.context.CheckSystem.adapter(
-    //     redisAdapter({
-    //       pubClient: redisStore.redis, 
-    //       subClient: redisStore.redis
-    //     })
-    //   );
-    // }
+    const MEMBERS =  global.REDIS_MEMBERS.map(irm => {
+      return {
+        port: irm.port, // Redis port
+        host: irm.host, // Redis host
+        family: global.RD_FAMILY,
+        db: global.RD_DB
+      }
+    })
+    if(MEMBERS.length!=1){
+      koa.context.CheckSystem.adapter(
+        redisAdapter({
+          pubClient: redisStore.redis, 
+          subClient: redisStore.redis
+        })
+      );
+    }
   }else{
     logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
   }
@@ -75,29 +68,22 @@ function creatSocket(app,koa) {
       // }
   })
   if (Array.isArray(global.REDIS_MEMBERS)) {
-    // const MEMBERS =  global.REDIS_MEMBERS.map(irm => {
-    //   return {
-    //     port: irm.port, // Redis port
-    //     host: irm.host, // Redis host
-    //     family: global.RD_FAMILY,
-    //     password: global.RD_PASSWORD
-    //   }
-    // })
-    // if(MEMBERS.length===1){
-    //   koa.context.CheckSystem.adapter(
-    //     redisAdapter({
-    //       pubClient: redisStore.redis, 
-    //       subClient: redisStore.redis.duplicate()
-    //     })
-    //   );
-    // }else{
-    //   koa.context.CheckSystem.adapter(
-    //     redisAdapter({
-    //       pubClient: redisStore.redis, 
-    //       subClient: redisStore.redis
-    //     })
-    //   );
-    // }
+    const MEMBERS =  global.REDIS_MEMBERS.map(irm => {
+      return {
+        port: irm.port, // Redis port
+        host: irm.host, // Redis host
+        family: global.RD_FAMILY,
+        password: global.RD_PASSWORD
+      }
+    })
+    if(MEMBERS.length!=1){
+      koa.context.CheckSystem.adapter(
+        redisAdapter({
+          pubClient: redisStore.redis, 
+          subClient: redisStore.redis
+        })
+      );
+    }
   }else{
     logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
   }
