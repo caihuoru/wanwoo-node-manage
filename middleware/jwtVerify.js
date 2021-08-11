@@ -5,10 +5,10 @@ const ipTime = async (ctx)=>{
     let ipObj = await ctx.redisStore.get('system:node:'+visitIp)
     if(ipObj){
         if(ipObj>=2){
-            await ctx.redisStore.set('system:node:'+visitIp,3,'EX',global.JWT_IP_TIME)
+            await ctx.redisStore.set('system:node:'+visitIp,3,'ex',global.JWT_IP_TIME)
         }else{
             ipObj = Number(ipObj)+1
-            await ctx.redisStore.set('system:node:'+visitIp,ipObj,'EX',global.JWT_IP_TIME)
+            await ctx.redisStore.set('system:node:'+visitIp,ipObj,'ex',global.JWT_IP_TIME)
         }
     }else{
         await ctx.redisStore.set('system:node:'+visitIp,1,'ex',global.JWT_IP_TIME)
