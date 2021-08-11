@@ -5,7 +5,7 @@ module.exports = {
     APP_PORT:19701,
     isSOCKET:false,
     APP_COOKIE:"nodeManageToken",
-    NACOS_IP:"127.0.0.1:18679",
+    NACOS_IP:"127.0.0.1:19679",
     NACOS_NAME_SPACE:"public",
     NACOS_SERVICE_NAME:"fzgang-node-manage",
     NACOS_GROUP_NAME:"DEFAULT_GROUP",
