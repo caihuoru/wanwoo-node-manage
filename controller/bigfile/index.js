@@ -65,6 +65,6 @@ module.exports = {
         if (fse.existsSync('/mnt/download')) {
             await fse.move(`./public/share/${name}`, `/mnt/download/${name}`, { overwrite: true })
         }
-        ctx.success({ url: `/mnt/download/${name}` })
+        ctx.success({ url: `/mnt/download/node/manage/${name}` })
     }
 }
