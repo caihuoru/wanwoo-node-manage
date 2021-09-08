@@ -2,7 +2,7 @@ module.exports = {
     //固定配置 config
     isRemoteConfig:true,
     isHTTPS:false,
-    APP_PORT:19701,
+    APP_PORT:18701,
     isSOCKET:false,
     APP_COOKIE:"nodeManageToken",
     NACOS_IP:"172.18.5.105:19679",
