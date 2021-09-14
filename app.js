@@ -7,7 +7,7 @@ const app = new Koa({
 const json = require('koa-json')
 const body = require('koa-body');
 const cors = require('koa2-cors');
-const koajwt = require('koa-jwt');
+// const koajwt = require('koa-jwt');
 
 //根据目录构建路由结构
 const composeRouter = require('./middleware/composeRouter')
@@ -16,7 +16,7 @@ const routerResponse = require('./middleware/routerResponse')
 //校验参数
 const datalizeVerify = require('./middleware/datalizeVerify')
 //JWT
-const jwtVerify = require('./middleware/jwtVerify')
+// const jwtVerify = require('./middleware/jwtVerify')
 //日志
 const loggers = require('./middleware/loggers')
 const { initPlugin } = require('./plugin');
@@ -38,23 +38,23 @@ app.use(body({
 }))
 app.use(json({ limit: '50mb' }))
 app.use(routerResponse())
-app.use(jwtVerify())
+// app.use(jwtVerify())
 //JWT
-app.use(koajwt({
-  secret: global.JWT_TOKEN
-}).unless({
-  path: [
-    /^\/upload/,
-    /^\/img/,
-    /^\/warning_voice/,
-    /^\/v1\/public/,
-    /^\/v1\/assetmanage/,
-    /^\/v1\/work/,
-    /^\/v1\/northport\/manage/,
-    /^\/v1\/webhook/,
-    /^\/v2\/public/,
-  ]
-}))
+// app.use(koajwt({
+//   secret: global.JWT_TOKEN
+// }).unless({
+//   path: [
+//     /^\/upload/,
+//     /^\/img/,
+//     /^\/warning_voice/,
+//     /^\/v1\/public/,
+//     /^\/v1\/assetmanage/,
+//     /^\/v1\/work/,
+//     /^\/v1\/northport\/manage/,
+//     /^\/v1\/webhook/,
+//     /^\/v2\/public/,
+//   ]
+// }))
 app.use(require('koa-static')(__dirname + '/public'))
 app.use(datalizeVerify())
 // routes
