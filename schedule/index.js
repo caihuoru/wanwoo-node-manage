@@ -34,7 +34,7 @@ const scheduleToad = (app)=>{
         return setServiceStatus(app)
     },(err) => {})
     // const job1 = new SimpleIntervalJob({ seconds: 10, }, getServiceStatusTask)
-    const job2 = new SimpleIntervalJob({ seconds: 5, }, setServiceStatusTask)
+    const job2 = new SimpleIntervalJob({ seconds: 30, }, setServiceStatusTask)
     // scheduler.addSimpleIntervalJob(job1)
     scheduler.addSimpleIntervalJob(job2)
 }

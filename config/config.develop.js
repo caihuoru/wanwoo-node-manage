@@ -1,6 +1,6 @@
 module.exports = {
     //固定配置 config
-    isRemoteConfig:false,
+    isRemoteConfig:true,
     isHTTPS:false,
     APP_PORT:18701,
     isSOCKET:false,
@@ -9,7 +9,7 @@ module.exports = {
     NACOS_NAME_SPACE:"public",
     NACOS_SERVICE_NAME:"fzgang-node-manage",
     NACOS_GROUP_NAME:"DEFAULT_GROUP",
-    NACOS_CONFIG:"all-base-service-config-prod.json",
+    NACOS_CONFIG:"all-base-service-config-develop.json",
     JWT_TOKEN:"manageStoreToken",
     JWT_IP_TIME:300,
     HTTPS_KEY:"./ssl/https/webserver.key",	//https证书秘钥
