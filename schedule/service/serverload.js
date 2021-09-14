@@ -1,5 +1,6 @@
 const { get } = require('../../plugin/axios')
-const { redisStore,redisSocket } = require('../../plugin/redis');
+const { redisStore } = require('../../plugin/redis');
+// redisSocket
 module.exports = {
     getServiceStatus: ()=>{
         return new Promise((resolve, reject)=>{

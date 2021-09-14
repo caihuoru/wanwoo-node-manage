@@ -4,7 +4,7 @@
  */
 const IO = require('socket.io')
 const {createNewServer} = require('./sshService')
-const redisAdapter = require("socket.io-redis");
+// const redisAdapter = require("socket.io-redis");
 const {redisStore} = require('../plugin/redis');
 const logUtil = require('../plugin/log4j');
 const Redis = require('ioredis');
@@ -33,14 +33,14 @@ function creatSocket(app,koa) {
         db: global.RD_DB
       }
     })
-    if(MEMBERS.length!=1){
-      koa.context.CheckSystem.adapter(
-        redisAdapter({
-          pubClient: redisStore.redis, 
-          subClient: redisStore.redis
-        })
-      );
-    }
+    // if(MEMBERS.length!=1){
+    //   koa.context.CheckSystem.adapter(
+    //     redisAdapter({
+    //       pubClient: redisStore.redis, 
+    //       subClient: redisStore.redis
+    //     })
+    //   );
+    // }
   }else{
     logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
   }
@@ -76,14 +76,14 @@ function creatSocket(app,koa) {
         password: global.RD_PASSWORD
       }
     })
-    if(MEMBERS.length!=1){
-      koa.context.CheckSystem.adapter(
-        redisAdapter({
-          pubClient: redisStore.redis, 
-          subClient: redisStore.redis
-        })
-      );
-    }
+    // if(MEMBERS.length!=1){
+    //   koa.context.CheckSystem.adapter(
+    //     redisAdapter({
+    //       pubClient: redisStore.redis, 
+    //       subClient: redisStore.redis
+    //     })
+    //   );
+    // }
   }else{
     logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
   }
