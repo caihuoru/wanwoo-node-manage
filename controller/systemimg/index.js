@@ -31,8 +31,8 @@ module.exports = {
             const userName = await ctx.redisStore.get(userKey + refreshToken)
             if (userName) {
                 const userNames = userName.replace(/\"/g, '')
-                const userGroup = await ctx.redisStore.hget(groupKey, userNames)
-                const userGroupInfo = await ctx.redisStore.hget(gropInfoKey, userGroup[0])
+                const userGroup = await ctx.redisStore.get(groupKey + userNames)
+                const userGroupInfo = await ctx.redisStore.get(gropInfoKey + userGroup[0])
                 userInfo.userName = userNames
                 userInfo.groupCode = userGroupInfo.groupCode
                 userInfo.groupName = userGroupInfo.name
@@ -44,30 +44,6 @@ module.exports = {
             '6': '原色Logo+文字图',
             '5': '网页标题Icon'
         }
-        let optionResult = '失败'
-        if (ctx.request.response.status >= 200 && ctx.request.response.status < 300) {
-            if (ctx.request.response.body.code === 0) {
-                optionResult = '成功'
-            }
-        }
-        logsMsg = {
-            threadId: process.pid,
-            crateTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-            userName: userInfo.userName,
-            groupCode: userInfo.groupCode,
-            groupName: userInfo.groupName,
-            uri: ctx.request.url,
-            optionName: optionsNameObj[body.type],
-            optionType: 2,
-            // 模块名称,这个值需要从请求中获取 modulekey 
-            modeName: moduleKey,
-            // 操作结果")
-            optionResult:optionResult,
-            params: `{name:${body.name},type:${body.type},content:'...'}`,
-            ips: visitIp
-        }
-        // 推送消息到指定交换机 并约定推送队列及消息标识
-        ctx.pubsubMq.sendMsg('topicExchangeOperatorLog', '', JSON.stringify(logsMsg, 0))
         if (body.type == '5') {
             let path = `./public/upload/${timeStamp}${extend_name}`
             await fse.writeFile(path, buffer, async function (err) {
@@ -111,6 +87,33 @@ module.exports = {
                 }
             })
             ctx.success({ 'url': imgUrl }, '上传成功!')
+        }
+        let optionResult = '失败'
+        if (ctx.request.response.status >= 200 && ctx.request.response.status < 300) {
+            if (ctx.request.response.body.code === 0) {
+                optionResult = '成功'
+            }
+        }
+        logsMsg = {
+            threadId: process.pid,
+            crateTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+            userName: userInfo.userName,
+            groupCode: userInfo.groupCode,
+            groupName: userInfo.groupName,
+            uri: ctx.request.url,
+            optionName: optionsNameObj[body.type],
+            optionType: 2,
+            // 模块名称,这个值需要从请求中获取 modulekey 
+            modeName: moduleKey,
+            // 操作结果")
+            optionResult: optionResult,
+            params: `{name:${body.name},type:${body.type},content:'...'}`,
+            ips: visitIp
+        }
+        // 推送消息到指定交换机 并约定推送队列及消息标识
+        const flasg = ctx.pubsubMq.sendMsg('topicExchangeOperatorLog', '', logsMsg)
+        if (flasg) {
+            console.log('发送成功')
         }
     },
 }
