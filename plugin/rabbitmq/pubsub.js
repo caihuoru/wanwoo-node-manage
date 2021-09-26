@@ -62,8 +62,8 @@ class PubsubMq{
         // 创建临时交换机
         await rabbitChannel.assertExchange(exchange_name, 'topic')
         //参数1 交换机名字 参数2 指定队列 3 内容
-        logUtil.pluginLogger.info('RabbitMq','pubsub-sendQueueMsg-'+exchange_name+'-'+queue,msg)
-        await rabbitChannel.publish(exchange_name, queue, Buffer.from(msg))
+        logUtil.pluginLogger.info('RabbitMq','pubsub-sendMsg-'+exchange_name+'-'+queue,JSON.stringify(msg,0))
+        await rabbitChannel.publish(exchange_name, queue, Buffer.from(JSON.stringify(msg,0)))
         rabbitChannel.close()
     }
     receiveQueueMsg = async (exchange_name,queue,callback)=>{
