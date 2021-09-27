@@ -1,6 +1,7 @@
 const NacosNamingClient = require('nacos').NacosNamingClient;
 const NacosConfigClient = require('nacos').NacosConfigClient;
 const logUtil = require('../plugin/log4j')
+const fs = require('fs')
 module.exports = {
   initNacosConfig: async () => {
     const configClient = new NacosConfigClient({
@@ -13,10 +14,28 @@ module.exports = {
       for (const k in processConfig) {
         global[k] = processConfig[k]
       }
+      const fileName = process.env.NODE_ENV == 'development'?'../config/config.develop':'../config/config.prod'
+      const oldConfig = require(fileName+'.js')
+      for (const k in oldConfig) {
+        oldConfig[k] = global[k]
+      }
+      const oldConfigStr  =JSON.stringify(oldConfig)
+        //文件写入成功。
+      fs.writeFileSync(fileName, oldConfigStr)
+      logUtil.pluginLogger.info('nacos', 'success', '配置写入本地成功')
+     
     } catch (_) {
       logUtil.pluginLogger.info('nacos', 'error', '参数获取异常，已启用本地配置')
+      const fileName = process.env.NODE_ENV == 'development'?'/config/config.develop':'/config/config.prod'
+      const oldConfig = require(fileName+'.js')
+      for (const k in oldConfig) {
+        oldConfig[k] = global[k]
+      }
+      const oldConfigStr  =JSON.stringify(oldConfig)
+        //文件写入成功。
+      fs.writeFileSync(fileName+'.js', oldConfigStr)
+      logUtil.pluginLogger.info('nacos', 'success', '配置写入本地成功')
     }
-
   },
   initNacosInstance: async () => {
     const client = new NacosNamingClient({
@@ -41,6 +60,11 @@ module.exports = {
     await client.registerInstance(global.NACOS_SERVICE_NAME, {
       ip: global.localIP,
       port: global.APP_PORT
-    }, global.NACOS_GROUP_NAME)
+    }, global.NACOS_GROUP_NAME).catch(()=>{
+      logUtil.pluginLogger.info('nacos', 'error', '注册失败，5s后将自动重连')
+      setTimeout(() => {
+        module.exports.initNacosInstance()
+      }, 5000);
+    })
   }
 }
