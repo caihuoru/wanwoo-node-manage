@@ -4,7 +4,7 @@
  */
 const Redis = require('ioredis');
 const logUtil = require('./log4j');
-const { Emitter } = require("@socket.io/redis-emitter")
+// const { Emitter } = require("@socket.io/redis-emitter")
 class RedisStore {
   constructor() {
     try {
@@ -25,7 +25,7 @@ class RedisStore {
         }
       }
       if (Array.isArray(REDIS_MEMBERS)) {
-        const MEMBERS = REDIS_MEMBERS.map(irm => {
+        const MEMBERS = REDIS_MEMBERS.map((irm,index) => {
           return {
             port: irm.port, // Redis port
             host: irm.host, // Redis host
@@ -51,9 +51,9 @@ class RedisStore {
           this.redis = new Redis({
             family: global.RD_FAMILY, 
             password: global.RD_PASSWORD,
-            db: global.RD_DB,
+            // db: global.RD_DB,
             sentinels: REDIS_MEMBERS,
-            name: global.RD_NAME,
+            name: global.RD_NAME
           });
         } else {
           // 其它情况为单机
@@ -66,6 +66,7 @@ class RedisStore {
       logUtil.pluginLogger.info('Redis', 'connect', error.message)
     }
     this.redis.on('connect',() => {
+      console.log('------------------------------------')
       logUtil.pluginLogger.info('Redis', 'connect', 'redis启动成功！')
     })
     this.redis.on('error',(err) => {
@@ -86,18 +87,23 @@ class RedisStore {
     return sid;
   }
   async get(sid) {
-    let data = await this.redis.get(sid);
-    logUtil.pluginLogger.info('Redis', 'get-' + sid, data)
-    if (data && typeof JSON.parse(data) == "object") {
-      return JSON.parse(data);
-    } else {
-      if (data) {
-        return data
+    try {
+      let data = await this.redis.get(sid);
+      logUtil.pluginLogger.info('Redis', 'get-' + sid, data)
+      console.log('=====',data)
+      if (data && typeof JSON.parse(data) == "object") {
+        return JSON.parse(data);
       } else {
-        return false
+        if (data) {
+          return data
+        } else {
+          return false
+        }
       }
-
+    } catch (error) {
+      console.log(error)
     }
+    
   }
   async incr(sid) {
     try {
@@ -111,8 +117,8 @@ class RedisStore {
   }
 }
 let redisStore = new RedisStore()
-const redisSocket = new Emitter(redisStore.redis);
+// const redisSocket = new Emitter(redisStore.redis);
 module.exports = {
   redisStore: redisStore,
-  redisSocket: redisSocket
+  // redisSocket: redisSocket
 }

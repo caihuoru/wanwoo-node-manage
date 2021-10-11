@@ -1,11 +1,11 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js add @socket.io/redis-emitte
+  D:\node\node.exe D:\node\node_modules\yarn\bin\yarn.js add ioioredis@4.24.5
 
 PATH: 
-  D:\Program Files\Git\mingw64\bin;D:\Program Files\Git\usr\bin;C:\Users\Jvan\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;D:\Program Files (x86)\NetSarang\Xftp 6;D:\Program Files (x86)\NetSarang\Xshell 6;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;D:\nvm;C:\Program Files\nodejs;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files (x86)\ZeroTier\One;D:\Program Files\Git\cmd;C:\Users\Jvan\AppData\Local\Microsoft\WindowsApps;D:\nvm;C:\Program Files\nodejs;D:\Program Files\Microsoft VS Code\Microsoft VS Code\bin;C:\Users\Jvan\flutter\bin;D:\Program Files\Java\jdk1.8.0_301\bin;D:\Program Files\Java\jdk1.8.0_301\jre\bin
+  D:\Program Files\Git\mingw64\bin;D:\Program Files\Git\usr\bin;C:\Users\j0065\bin;D:\Program Files\NetSarang\Xftp 6;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;D:\Program Files\Git\cmd;D:\nvm;D:\node;D:\Program Files\NetSarang\Xshell 6;D:\Program Files\IDM Computer Solutions\UltraEdit;C:\Users\j0065\AppData\Local\Microsoft\WindowsApps;D:\Program Files\Microsoft VS Code\bin;D:\nvm;D:\node
 
 Yarn version: 
-  1.22.5
+  1.22.11
 
 Node version: 
   14.0.0
@@ -14,13 +14,13 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: http://172.18.5.29:8181/repository/npm_wanwoo_group/@socket.io%2fredis-emitte: Not found
-      at Request.params.callback [as _callback] (D:\nvm\v14.0.0\node_modules\yarn\lib\cli.js:66988:18)
-      at Request.self.callback (D:\nvm\v14.0.0\node_modules\yarn\lib\cli.js:140662:22)
+  Error: http://172.18.5.29:8181/repository/npm_wanwoo_group/ioioredis: Not found
+      at Request.params.callback [as _callback] (D:\nvm\v14.0.0\node_modules\yarn\lib\cli.js:66992:18)
+      at Request.self.callback (D:\nvm\v14.0.0\node_modules\yarn\lib\cli.js:140763:22)
       at Request.emit (events.js:315:20)
-      at Request.<anonymous> (D:\nvm\v14.0.0\node_modules\yarn\lib\cli.js:141634:10)
+      at Request.<anonymous> (D:\nvm\v14.0.0\node_modules\yarn\lib\cli.js:141735:10)
       at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (D:\nvm\v14.0.0\node_modules\yarn\lib\cli.js:141556:12)
+      at IncomingMessage.<anonymous> (D:\nvm\v14.0.0\node_modules\yarn\lib\cli.js:141657:12)
       at Object.onceWrapper (events.js:421:28)
       at IncomingMessage.emit (events.js:327:22)
       at endReadableNT (_stream_readable.js:1218:12)
@@ -38,6 +38,7 @@ npm manifest:
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
+      "@socket.io/redis-emitter": "^4.1.0",
       "amqplib": "0.7.1",
       "axios": "0.21.1",
       "crypto-js": "4.0.0",
@@ -384,6 +385,15 @@ Lockfile:
     resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
     integrity sha1-n7OjzzEyMoFR81PeRjLgHlIQK+o=
   
+  "@socket.io/redis-emitter@^4.1.0":
+    version "4.1.0"
+    resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/@socket.io/redis-emitter/-/redis-emitter-4.1.0.tgz#f18325e2fae6d0ca354b9c1272c902e988285eb8"
+    integrity sha512-zZkoVfWY3zlbGk8sXFBqQy7CdH/Zg9cPq1EYuIdpVFybEWKfFxyguqsInMZCvjwotAsaICnIO2d9s8/DmY2DAw==
+    dependencies:
+      debug "~4.3.1"
+      notepack.io "~2.1.0"
+      socket.io-parser "~4.0.4"
+  
   "@szmarczak/http-timer@^1.1.2":
     version "1.1.2"
     resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
@@ -395,6 +405,11 @@ Lockfile:
     version "1.1.2"
     resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
     integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
+  
+  "@types/component-emitter@^1.2.10":
+    version "1.2.10"
+    resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/@types/component-emitter/-/component-emitter-1.2.10.tgz#ef5b1589b9f16544642e473db5ea5639107ef3ea"
+    integrity sha1-71sVibnxZURkLkc9tepWORB+8+o=
   
   "@types/formidable@^1.0.31":
     version "1.2.3"
@@ -997,7 +1012,7 @@ Lockfile:
     resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/dayjs/-/dayjs-1.10.5.tgz#5600df4548fc2453b3f163ebb2abbe965ccfb986"
     integrity sha512-BUFis41ikLz+65iH6LHQCDm4YPMj5r1YFLdupPIyM4SGcXMmtiLQ7U37i+hGS8urIuqe7I/ou3IS1jVc4nbN4g==
   
-  debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1:
+  debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@~4.3.1:
     version "4.3.2"
     resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
     integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
@@ -1691,16 +1706,17 @@ Lockfile:
     resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
     integrity sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==
   
-  ioredis@4.24.5:
-    version "4.24.5"
-    resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/ioredis/-/ioredis-4.24.5.tgz#32f56ccb04d2e9ff00aa935caf348fd4e19867b0"
-    integrity sha512-a1uk8WXM4Xe9bfYUJH17Up9ODEASjYCWiD/BKojPHp5YDDMX/QBOWxgSmrtpRE+ARdLYUoXSLeyGZyegLdHcOg==
+  ioredis@4.27.9:
+    version "4.27.9"
+    resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/ioredis/-/ioredis-4.27.9.tgz#c27bbade9724f0b8f84c279fb1d567be785ba33d"
+    integrity sha512-hAwrx9F+OQ0uIvaJefuS3UTqW+ByOLyLIV+j0EH8ClNVxvFyH9Vmb08hCL4yje6mDYT5zMquShhypkd50RRzkg==
     dependencies:
       cluster-key-slot "^1.1.0"
       debug "^4.3.1"
       denque "^1.1.0"
       lodash.defaults "^4.2.0"
       lodash.flatten "^4.4.0"
+      lodash.isarguments "^3.1.0"
       p-map "^2.1.0"
       redis-commands "1.7.0"
       redis-errors "^1.2.0"
@@ -2112,6 +2128,11 @@ Lockfile:
     resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/lodash.includes/-/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
     integrity sha1-YLuYqHy5I8aMoeUTJUgzFISfVT8=
   
+  lodash.isarguments@^3.1.0:
+    version "3.1.0"
+    resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz#2f573d85c6a24289ff00663b491c1d338ff3458a"
+    integrity sha1-L1c9hcaiQon/AGY7SRwdM4/zRYo=
+  
   lodash.isboolean@^3.0.3:
     version "3.0.3"
     resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
@@ -2432,6 +2453,11 @@ Lockfile:
     version "4.5.1"
     resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/normalize-url/-/normalize-url-4.5.1.tgz#0dd90cf1288ee1d1313b87081c9a5932ee48518a"
     integrity sha512-9UZCFRHQdNrfTpGg8+1INIg93B6zE0aXMVFkw1WFwvO4SlZywU6aLg5Of0Ap/PgcbSw4LNxvMWXMeugwMCX0AA==
+  
+  notepack.io@~2.1.0:
+    version "2.1.3"
+    resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/notepack.io/-/notepack.io-2.1.3.tgz#cc904045c751b1a27b2dcfd838d81d0bf3ced923"
+    integrity sha512-AgSt+cP5XMooho1Ppn8NB3FFaVWefV+qZoZncYTUSch2GAEwlYLcIIbT5YVkMlFeNHnfwOvc4HDlbvrB5BRxXA==
   
   notepack.io@~2.2.0:
     version "2.2.0"
@@ -3069,6 +3095,15 @@ Lockfile:
       component-emitter "~1.3.0"
       debug "~3.1.0"
       isarray "2.0.1"
+  
+  socket.io-parser@~4.0.4:
+    version "4.0.4"
+    resolved "http://172.18.5.29:8181/repository/npm_wanwoo_group/socket.io-parser/-/socket.io-parser-4.0.4.tgz#9ea21b0d61508d18196ef04a2c6b9ab630f4c2b0"
+    integrity sha512-t+b0SS+IxG7Rxzda2EVvyBZbvFPBCjJoyHuE0P//7OAsN23GItzDRdWa6ALxZI/8R5ygK7jAR6t028/z+7295g==
+    dependencies:
+      "@types/component-emitter" "^1.2.10"
+      component-emitter "~1.3.0"
+      debug "~4.3.1"
   
   socket.io-redis@5.4.0:
     version "5.4.0"
