@@ -41,5 +41,8 @@ module.exports = {
     RD_NAME: 'wanwoomaster',
     REDIS_MEMBERS:[ {"port":18671,"host":"172.18.5.145"}],
     // 三种接入模式：standalone（单机模式）,sentinel(哨兵模式)， cluster(集群模式)，默认是standalone
-    REDIS_TEYP: 'standalone'
+    REDIS_TEYP: 'standalone',
+    // 持久化开始标识符（勿删）
+    /**everlasting-start**/
+    /**everlasting-end**/
 };

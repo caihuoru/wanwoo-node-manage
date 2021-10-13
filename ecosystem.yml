@@ -11,4 +11,4 @@ apps:
       error_file: "/var/log/pm2/fzgang-galaxy-manage/app-err.log"
       out_file: "/var/log/pm2/fzgang-galaxy-manage/app-out.log"
       combine_logs: false
-      ignore_watch: ["node_modules","logs"]
+      ignore_watch: ["node_modules","logs","config"]
