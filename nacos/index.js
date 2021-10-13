@@ -21,7 +21,7 @@ module.exports = {
           newLines.push(`    ${k}:${JSON.stringify(processConfig[k])},`)
         }
       }
-      const fileName = process.env.NODE_ENV == 'development' ? '\\config\\config.develop.js' : '\\config\\config.prod.js'
+      const fileName = process.env.NODE_ENV == 'development' ? '\\config\\config.develop.js' : '/config/config.prod.js'
       let basePath = path.resolve('./')
       let fileContent = fs.readFileSync(basePath + fileName, 'utf-8').split?.(/\r\n|\n|\r/gm) || '';
       const startIndex = fileContent.findIndex(str => str.trim() === '/**everlasting-start**/');
@@ -61,7 +61,7 @@ module.exports = {
       ip: global.localIP,
       port: global.APP_PORT
     }, global.NACOS_GROUP_NAME).catch(() => {
-      logUtil.pluginLogger.info('nacos', 'error', '注册失败，5s后将自动重连')
+      logUtil.pluginLogger.error('nacos', 'error', '注册失败，5s后将自动重连')
       setTimeout(() => {
         module.exports.initNacosInstance()
       }, 5000);
