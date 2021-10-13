@@ -140,6 +140,7 @@ module.exports = {
                         title: "操作",
                         slotName: "assetInormation.action",
                         dataIndex: "action",
+                        width: 50,
                         scopedSlots: { customRender: "action" },
                       },
                       {

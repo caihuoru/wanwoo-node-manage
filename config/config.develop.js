@@ -40,5 +40,8 @@ module.exports = {
     RD_DB: 0,
     REDIS_MEMBERS:[{"port":17671,"host":"172.18.5.240"},{"port":17671,"host":"172.18.5.241"},{"port":17671,"host":"172.18.5.242"}],
     REDIS_TEYP:"sentinel",
-    RD_NAME:"wanwoomaster_pingang"
+    RD_NAME:"wanwoomaster_pingang",
+    // 持久化开始标识符（勿删）
+    /**everlasting-start**/
+    /**everlasting-end**/
 };

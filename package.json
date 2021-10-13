@@ -8,6 +8,10 @@
     "prd": "pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "nodemonConfig": {
+    "ignore": ["config/*"],
+    "delay": "500"
+  },
   "dependencies": {
     "@socket.io/redis-emitter": "^4.1.0",
     "amqplib": "0.7.1",
