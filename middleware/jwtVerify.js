@@ -17,6 +17,7 @@ const ipTime = async (ctx)=>{
 const jwtVerify = () => {
     return async(ctx, next) =>{
         try {
+          
             const authorization = ctx.get('Authorization')
             // 检验 token 是否已过期
             if(authorization!=''){

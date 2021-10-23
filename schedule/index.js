@@ -1,6 +1,6 @@
 const schedule = require('node-schedule');
 const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require('toad-scheduler')
-const {getServiceStatus, setServiceStatus} = require('./service/serverload')
+const {getServiceStatus, getRedisWarn,setServiceStatus} = require('./service/serverload')
 const scheduleNode = (app)=>{
     //schedule.scheduleJob('*/5 * * * * ?',async ()=>{
         //触发多个mq
@@ -24,6 +24,9 @@ const scheduleNode = (app)=>{
     // schedule.scheduleJob('*/1 * * * * ?',async ()=>{
     //     console.log(schedule.scheduledJobs)
     // })
+    schedule.scheduleJob('*/5 * * * * ?',async ()=>{
+        getRedisWarn(app)
+    })
 }
 const scheduleToad = (app)=>{
     const scheduler = new ToadScheduler()

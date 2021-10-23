@@ -31,10 +31,10 @@ class RedisStore {
             host: irm.host, // Redis host
           }
         })
-        if(global.REDIS_TEYP === 'standalone'){
+        if (global.REDIS_TEYP === 'standalone') {
           // 单机
           this.redis = new Redis({ ...MEMBERS[0], ...basicConf });
-        } else if(global.REDIS_TEYP === 'cluster') {
+        } else if (global.REDIS_TEYP === 'cluster') {
           // 集群
           this.redis = new Redis.Cluster(MEMBERS, {
             clusterRetryStrategy: basicConf.retryStrategy,
@@ -46,10 +46,10 @@ class RedisStore {
               db: global.RD_DB,
             }
           });
-        }else if(global.REDIS_TEYP === 'sentinel') {
+        } else if (global.REDIS_TEYP === 'sentinel') {
           // 哨兵
           this.redis = new Redis({
-            family: global.RD_FAMILY, 
+            family: global.RD_FAMILY,
             password: global.RD_PASSWORD,
             db: global.RD_DB,
             sentinels: REDIS_MEMBERS,
@@ -59,16 +59,16 @@ class RedisStore {
           // 其它情况为单机
           this.redis = new Redis({ ...MEMBERS[0], ...basicConf });
         }
-      }else{
+      } else {
         logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
       }
     } catch (error) {
       logUtil.pluginLogger.info('Redis', 'connect', error.message)
     }
-    this.redis.on('connect',() => {
+    this.redis.on('connect', () => {
       logUtil.pluginLogger.info('Redis', 'connect', 'redis启动成功！')
     })
-    this.redis.on('error',(err) => {
+    this.redis.on('error', (err) => {
       logUtil.pluginLogger.info('Redis', 'error', err.mseeage)
     })
   }
@@ -97,6 +97,31 @@ class RedisStore {
         return false
       }
 
+    }
+  }
+
+  async hgetall(sid) {
+    let data = await this.redis.hgetall(sid);
+    logUtil.pluginLogger.info('Redis', 'hgetall-' + sid)
+    return data ? data : null;
+
+  }
+  async delKeys(sid, key) {
+    this.redis.del(sid + ':' + key)
+
+  }
+
+  async hset(sid, key, value) {
+    let data = await this.redis.hset(sid, key, JSON.stringify(value));
+    logUtil.pluginLogger.info('Redis', 'hset-' + sid + '-key:' + key + '-value:' + JSON.stringify(value), data)
+    if (data && typeof JSON.parse(data) == "object") {
+      return JSON.parse(data);
+    } else {
+      if (data) {
+        return data
+      } else {
+        return false
+      }
     }
   }
   async incr(sid) {

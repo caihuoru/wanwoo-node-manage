@@ -28,5 +28,7 @@ module.exports={
         app.context.logUtil = logUtil
         app.context.axios = axios
         app.context.db = db
+        // socket用户列表
+        app.context.socketUser = []
     }
 }
