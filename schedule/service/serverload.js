@@ -75,7 +75,7 @@ module.exports = {
                     } else {
                         tokenArr[token] = {
                             keys : [key],
-                            data = data
+                            data : data
                         }
                     }
                 }
