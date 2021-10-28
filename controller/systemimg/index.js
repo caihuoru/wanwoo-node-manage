@@ -96,7 +96,7 @@ module.exports = {
         }
         logsMsg = {
             threadId: process.pid,
-            crateTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+            crateTime: dayjs().valueOf(),
             userName: userInfo.userName,
             groupCode: userInfo.groupCode,
             groupName: userInfo.groupName,
@@ -111,7 +111,7 @@ module.exports = {
             ips: visitIp
         }
         // 推送消息到指定交换机 并约定推送队列及消息标识
-        const flasg = ctx.pubsubMq.sendMsg('topicExchangeOperatorLog', '', logsMsg)
+        const flasg = ctx.pubsubMq.sendMsg('topicExchangeOperatorLog', 'topicRoutingOperatorLog', logsMsg)
         if (flasg) {
             console.log('发送成功')
         }

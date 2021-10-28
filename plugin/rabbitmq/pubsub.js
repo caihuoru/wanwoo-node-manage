@@ -55,15 +55,17 @@ class PubsubMq{
         }
         rabbitChannel.close()
     }
-    sendMsg= async (exchange_name,queue,msg)=>{
+    sendMsg= async (exchange_name,routingkey,msg)=>{
         const self = this;
         const rabbitConn = await self.open
         const rabbitChannel = await rabbitConn.createChannel()
         // 创建临时交换机
-        await rabbitChannel.assertExchange(exchange_name, 'topic')
+        await rabbitChannel.assertExchange(exchange_name, 'topic',{
+            durable: true
+        })
         //参数1 交换机名字 参数2 指定队列 3 内容
-        logUtil.pluginLogger.info('RabbitMq','pubsub-sendMsg-'+exchange_name+'-'+queue,JSON.stringify(msg,0))
-        await rabbitChannel.publish(exchange_name, queue, Buffer.from(JSON.stringify(msg,0)))
+        logUtil.pluginLogger.info('RabbitMq','pubsub-sendMsg-'+exchange_name+'-routerkey'+routingkey,JSON.stringify(msg))
+        await rabbitChannel.publish(exchange_name, routingkey, Buffer.from(JSON.stringify(msg)))
         rabbitChannel.close()
     }
     receiveQueueMsg = async (exchange_name,queue,callback)=>{
