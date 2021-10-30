@@ -111,7 +111,7 @@ module.exports = {
             ips: visitIp
         }
         // 推送消息到指定交换机 并约定推送队列及消息标识
-        const flasg = ctx.pubsubMq.sendMsg('topicExchangeOperatorLog', 'topicRoutingOperatorLog', logsMsg)
+        const flasg = ctx.pubsubMq.sendMsg('topicExchangeFrontOperatorLog', 'topicRoutingFrontOperatorLog', logsMsg)
         if (flasg) {
             console.log('发送成功')
         }
