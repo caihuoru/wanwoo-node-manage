@@ -14,6 +14,7 @@ module.exports = {
     JWT_IP_TIME:300,
     HTTPS_KEY:"./ssl/https/webserver.key",	//https证书秘钥
     HTTPS_CERT:"./ssl/https/webserver.crt",	//https证书
+    PREFIX_IP_ADDRESS:'172.18', // ip前缀
     //如果启用本地配置
     DB_HOST: "172.18.5.122",
     DB_NAME: "Galaxy",

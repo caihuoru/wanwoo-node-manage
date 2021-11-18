@@ -6,14 +6,17 @@ module.exports = {
         let locatIp = '';
         for (let dev in ifaces) {
             //兼容mac linux windows
-            if (dev === 'en0' || dev === '以太网' || dev === 'eth0' || dev === 'LAN1'){
-                for (let j = 0;j < ifaces[dev].length;j++) {
-                    if (ifaces[dev][j].family === 'IPv4') {
+            for (let j = 0;j < ifaces[dev].length;j++) {
+                if (ifaces[dev][j].family === 'IPv4') {
+                    if(ifaces[dev][j].address&&(ifaces[dev][j].address.indexOf( global.PREFIX_IP_ADDRESS)>-1)){
                         locatIp = ifaces[dev][j].address;
                         break;
                     }
                 }
             }
+        }
+        if(!locatIp){
+            throw new Error('ipv4地址异常')
         }
         return {
             ip:locatIp,
