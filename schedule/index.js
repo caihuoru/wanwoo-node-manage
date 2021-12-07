@@ -24,9 +24,6 @@ const scheduleNode = (app)=>{
     // schedule.scheduleJob('*/1 * * * * ?',async ()=>{
     //     console.log(schedule.scheduledJobs)
     // })
-    schedule.scheduleJob('*/5 * * * * ?',async ()=>{
-        getRedisWarn(app)
-    })
 }
 const scheduleToad = (app)=>{
     const scheduler = new ToadScheduler()
