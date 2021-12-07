@@ -60,42 +60,5 @@ module.exports = {
                 resolve('1')
             })
         })
-    },
-    getRedisWarn: (app) => {
-        redisStore.hgetall('galaxy:socketIo:client').then(res => {
-            const tokenArr = {}
-            for (const key in res) {
-                const [token, type] = key.split(',')
-                if (type === 'message_event') {
-                    // 告警
-                   data = JSON.parse( res[key])
-                    if (tokenArr[token]) {
-                        tokenArr[token].keys.concat([key])
-                        tokenArr[token].data.concat(data)
-                    } else {
-                        tokenArr[token] = {
-                            keys : [key],
-                            data : data
-                        }
-                    }
-                }
-            }
-            for (const key in tokenArr) {
-                const user = app.context.socketUser.find(user => user.refreshToken === key)
-                if (user) {
-                    keys = tokenArr[key].keys
-                    keys.map(ii=>{
-                        redisStore.delKeys('galaxy:socketIo:client',ii)
-                    })  
-                   
-                    app.context.CheckSystem.to(user.socketId).emit('message_event', tokenArr[key].data)
-                }
-            }
-            redisStore.hge
-
-        })
-    },
-    clearSocketUser: (app) => {
-        app.context.socketUser = []
     }
 }
