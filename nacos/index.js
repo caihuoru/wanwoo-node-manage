@@ -61,10 +61,13 @@ module.exports = {
       ip: global.localIP,
       port: global.APP_PORT
     }, global.NACOS_GROUP_NAME).catch(() => {
-      logUtil.pluginLogger.error('nacos', 'error', '注册失败，5s后将自动重连')
-      setTimeout(() => {
-        module.exports.initNacosInstance()
-      }, 5000);
+      logUtil.pluginLogger.error('nacos', 'error', '注册失败')
+      process.exit(1)
+    
+
+    //   setTimeout(() => {
+    //     module.exports.initNacosInstance()
+    //   }, 5000);
     })
   }
 }
