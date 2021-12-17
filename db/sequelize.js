@@ -26,7 +26,7 @@ const sequelize = new Sequelize(global.DB_NAME,global.DB_USER,global.DB_PASSWORD
 // 模型生效 不允许生产环境使用
 // // {alter: true}
 // // {force: true}
-sequelize.sync({alter: true})
+// sequelize.sync({alter: true})
 function log(sql,detail){
     logUtil.dbLogger.info(sql,detail);
 }
