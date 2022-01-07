@@ -1,8 +1,31 @@
 const fse = require('fs-extra');
 const path = require('path'); // 图片路径
+const dayjs = require('dayjs')
+
 module.exports ={
     //上传分片
     updateLicense: async(ctx, next) =>{
+        const { ip } = ctx.request
+
+        const adminToken = ctx.header['admin-token']
+        const moduleKey = ctx.header['modulekey']
+        const userKey = 'authLocal:user:token:'
+        const groupKey = 'authLocal:user:groupPermission:'
+        const gropInfoKey = 'authLocal:groupInfo'
+        const userInfo = {}
+        const visitIp = ip.replace('::ffff:', '');
+        if (adminToken) {
+            const refreshToken = adminToken.split(" ")[0];
+            const userName = await ctx.redisStore.get(userKey + refreshToken)
+            if (userName) {
+                const userNames = userName.replace(/\"/g, '')
+                const userGroup = await ctx.redisStore.get(groupKey + userNames)
+                const userGroupInfo = await ctx.redisStore.get(gropInfoKey + userGroup[0])
+                userInfo.userName = userNames
+                userInfo.groupCode = userGroupInfo.groupCode
+                userInfo.groupName = userGroupInfo.name
+            }
+        }
         let chunkDir = path.join('./public/share/license/uecm_license.lid');
         await fse.move(ctx.request.files.file.path, chunkDir, { overwrite: true })
         if(fse.existsSync('/mnt/download')){
@@ -12,7 +35,35 @@ module.exports ={
             })
             ctx.success({url:`/mnt/download/uecm_license.lid`})
         }else{
-            ctx.fail('系统错误',500,error.message)
+            ctx.fail('系统错误',500)
+        }
+
+        let optionResult = '失败'
+        if (ctx.request.response.status >= 200 && ctx.request.response.status < 300) {
+            if (ctx.request.response.body.code === 0) {
+                optionResult = '成功'
+            }
+        }
+        logsMsg = {
+            threadId: process.pid,
+            crateTime: dayjs().valueOf(),
+            userName: userInfo.userName,
+            groupCode: userInfo.groupCode,
+            groupName: userInfo.groupName,
+            uri: ctx.request.url,
+            optionName: '更新License授权文件',
+            optionType: 2,
+            // 模块名称,这个值需要从请求中获取 modulekey 
+            modeName: moduleKey,
+            // 操作结果")
+            optionResult: optionResult,
+            params: ctx.request.files.file.name,
+            ips: visitIp
+        }
+        // 推送消息到指定交换机 并约定推送队列及消息标识
+        const flasg = ctx.pubsubMq.sendMsg('topicExchangeFrontOperatorLog', 'topicRoutingFrontOperatorLog', logsMsg)
+        if (flasg) {
+            console.log('发送成功')
         }
     },
 }
