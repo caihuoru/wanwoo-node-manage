@@ -1,4 +1,4 @@
-FROM 172.18.5.171:5000/iottepa-basic-main-pm2:latest
+FROM 172.18.5.171/iottepa-basic-main-pm2:latest
 MAINTAINER Jvan <18146628322@189.cn>
 # 拷贝项目进镜像
 RUN mkdir /opt/node_app
