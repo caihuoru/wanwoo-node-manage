@@ -52,7 +52,7 @@ module.exports ={
             groupName: userInfo.groupName,
             uri: ctx.request.url,
             optionName: '更新License授权文件',
-            optionType: 2,
+            optionType: 'UPDATA',
             // 模块名称,这个值需要从请求中获取 modulekey 
             modeName: moduleKey,
             // 操作结果")
