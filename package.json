@@ -9,7 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "nodemonConfig": {
-    "ignore": ["config/*"],
+    "ignore": [
+      "config/*"
+    ],
     "delay": "500"
   },
   "dependencies": {
@@ -22,6 +24,7 @@
     "debug": "4.1.1",
     "dotenv": "8.2.0",
     "ioredis": "4.24.5",
+    "ip": "^1.1.5",
     "jsonwebtoken": "8.5.1",
     "koa": "2.7.0",
     "koa-body": "4.2.0",
@@ -36,6 +39,7 @@
     "nacos": "2.0.0",
     "node-schedule": "2.0.0",
     "png-to-ico": "2.1.2",
+    "public-ip": "^5.0.0",
     "sequelize": "5.21.10",
     "socket.io": "2.2.0",
     "socket.io-redis": "5.4.0",

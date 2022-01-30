@@ -1,0 +1,8 @@
+node_modules
+logs
+public/upload
+Dockerfile
+.git
+.dockerignore
+.gitignore
+yarn-error.log
