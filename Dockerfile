@@ -1,14 +1,11 @@
 FROM node:14.17.0-slim
 # 镜像元信息
-LABEL Racaly="zhaoyan@iottepa.cn" 
+LABEL Jvan <18146628322@189.cn>
 # 工作区
-WORKDIR /node            
+WORKDIR  /opt/node_app          
 # 拷贝代码进镜像
 COPY . .
-# 拷贝证书
-COPY ssl /ssl
 # 删除多余文件并安装依赖
-RUN rm -rf ./ssl \ 
-    && yarn
+RUN  yarn
 # CMD执行
 CMD ["yarn", "start"]
