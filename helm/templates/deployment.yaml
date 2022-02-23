@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+  labels:
+    app: {{ .Values.deployment.name }}
+spec:
+  replicas: {{ .Values.deployment.replicas }} # 副本数量
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }}
+    spec:
+      # imagePullSecrets:
+      #   - name: docker-registry-secret
+      containers:
+        - name: {{ .Values.deployment.name }}
+          image: {{ .Values.deployment.image }} # 镜像版本
+          imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }} # POD端口
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          resources:
+            limits:
+              memory: 2500Mi
+            requests:
+              memory: 500Mi
+          volumeMounts:
+            - name: config-index-js
+              mountPath: /opt/node_app/config/index.js
+              subPath: index.js
+            - name: config-cloud-js
+              mountPath: /opt/node_app/config/config.cloud.js
+              subPath: config.cloud.js
+            - name: rabbitmq
+              mountPath: /ssl/rabbitmq
+              readOnly: true
+            - name: nginx-ssl
+              mountPath: /ssl/https
+              readOnly: true
+            - name: rfid-upload
+              mountPath: /node/public/upload
+            - name: download
+              mountPath: /mnt/download
+      volumes:
+        - name: k8s
+          hostPath:
+            path: /ww/applications/runScript/k8s
+            type: Directory
+        - name: usr-local-bin
+          hostPath:
+            path: /usr/local/bin
+            type: Directory
+        - name: config-index-js
+          configMap:
+            name: {{ .Values.configMap.name }}
+            items:
+              - key: config.index.js
+                path: index.js
+        - name: config-cloud-js
+          configMap:
+            name: {{ .Values.configMap.name }}
+            items:
+              - key: config.cloud.js
+                path: config.cloud.js
+        - name: rabbitmq
+          hostPath:
+            path: /ww/applications/basicComps/rabbitmq
+            type: Directory
+        - name: nginx-ssl
+          hostPath:
+            path: /ww/applications/controllerComps/nginx/ssl
+            type: Directory
+        - name: rfid-upload
+          hostPath:
+            path: /mnt/download/node/rfid/upload
+            type: Directory
+        - name: download
+          hostPath:
+            path: /mnt/download
+            type: Directory
+      initContainers:
+        - name: init-operation-center
+          image: busybox:1.34.1
+          command: ['sh', '-c', 'sh /root/wait-for-endpoint.sh --name=operation-center --namespace={{ .Release.Namespace }}']
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          volumeMounts:
+            - name: k8s
+              mountPath: /root
+              readOnly: true
+            - name: usr-local-bin
+              mountPath: /usr/local/bin
+              readOnly: true

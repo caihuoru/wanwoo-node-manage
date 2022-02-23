@@ -1,0 +1,19 @@
+deployment:
+  name: nodejs-manage # 部署名
+  image: registry.iottepa.local/iottepa-node-main-manage:latest # 镜像版本
+  imagePullPolicy: IfNotPresent # 镜像拉取策略
+  replicas: 1 # 副本数量
+
+configMap:
+  name: nodejs-manage # 配置名
+
+service:
+  name: nodejs-manage # Service服务名
+  ##
+  # 服务类型（网络类型），可选值如下
+  # LoadBalancer 负载均衡，集群外可访问
+  # ClusterIP 仅限集群内部访问
+  ##
+  type: ClusterIP # Service网络类型
+  port: 80 # Service服务端口
+  targetPort: 18701 # POD端口
