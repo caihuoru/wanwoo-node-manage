@@ -82,12 +82,7 @@ spec:
           hostPath:
             path: /ww/applications/basicComps/rabbitmq
             type: Directory
-        - name: nginx-ssl
-          hostPath:
-            path: /ww/applications/controllerComps/nginx/ssl
-            type: Directory
         - name: rfid-upload
-          hostPath:
             persistentVolumeClaim:
             claimName: {{ .Values.deployment.existingPersistentVolumeClaim }}
         - name: download
