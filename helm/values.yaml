@@ -1,10 +1,10 @@
 deployment:
   name: nodejs-manage # 部署名
   image: registry.iottepa.local/iottepa-node-main-manage # 镜像版本
-  imageTag: 6.1.1-base
+  imageTag: 6.1.1-beta
   imagePullPolicy: IfNotPresent # 镜像拉取策略
   replicas: 1 # 副本数量
-
+  existingPersistentVolumeClaim: uecm-nodejs
 configMap:
   name: nodejs-manage # 配置名
 
