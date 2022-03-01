@@ -76,15 +76,14 @@ spec:
               - key: config.cloud.js
                 path: config.cloud.js
         - name: rabbitmq
-          hostPath:
-            path: /ww/applications/basicComps/rabbitmq
-            type: Directory
+          persistentVolumeClaim:
+            claimName: {{ .Values.deployment.existingPersistentVolumeClaim.rabbitmq }}
         - name: rfid-upload
-            persistentVolumeClaim:
-            claimName: {{ .Values.deployment.existingPersistentVolumeClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.deployment.existingPersistentVolumeClaim.file }}
         - name: download
           persistentVolumeClaim:
-            claimName: {{ .Values.deployment.existingPersistentVolumeClaim }}
+            claimName: {{ .Values.deployment.existingPersistentVolumeClaim.file }}
       initContainers:
         - name: init-operation-center
           image: k8s-wait-for-endpoint:1.0.0

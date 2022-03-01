@@ -4,7 +4,9 @@ deployment:
   imageTag: 6.1.1-beta
   imagePullPolicy: IfNotPresent # 镜像拉取策略
   replicas: 1 # 副本数量
-  existingPersistentVolumeClaim: uecm-nodejs
+  existingPersistentVolumeClaim: 
+    file: uecm-nodejs
+    rabbitmq: rabbitmq-pvc
 configMap:
   name: nodejs-manage # 配置名
 
