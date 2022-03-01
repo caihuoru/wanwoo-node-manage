@@ -58,9 +58,6 @@ spec:
             - name: rabbitmq
               mountPath: /ssl/rabbitmq
               readOnly: true
-            - name: nginx-ssl
-              mountPath: /ssl/https
-              readOnly: true
             - name: rfid-upload
               mountPath: /node/public/upload
             - name: download
