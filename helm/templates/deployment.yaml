@@ -87,9 +87,6 @@ spec:
           command: ['sh', '-c', 'chown -R 999:999 /ssl/rabbitmq']
           - name: rabbitmq
             mountPath: /ssl/rabbitmq
-            volumeMounts:
-            - name: rabbitmq-config
-              mountPath: /etc/rabbitmq
         - name: init-operation-center
           image: k8s-wait-for-endpoint:1.0.0
           args: ['--name=operation-center', '--namespace={{ .Release.Namespace }}']
