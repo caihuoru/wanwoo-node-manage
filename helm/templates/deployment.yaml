@@ -58,7 +58,7 @@ spec:
             - name: rabbitmq
               mountPath: /ssl/rabbitmq
               readOnly: true
-            - name: rfid-upload
+            - name: download
               mountPath: /node/public/upload
             - name: download
               mountPath: /mnt/download
@@ -78,9 +78,6 @@ spec:
         - name: rabbitmq
           persistentVolumeClaim:
             claimName: {{ .Values.deployment.existingPersistentVolumeClaim.rabbitmq }}
-        - name: rfid-upload
-          persistentVolumeClaim:
-            claimName: {{ .Values.deployment.existingPersistentVolumeClaim.file }}
         - name: download
           persistentVolumeClaim:
             claimName: {{ .Values.deployment.existingPersistentVolumeClaim.file }}
