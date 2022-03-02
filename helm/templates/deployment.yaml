@@ -85,6 +85,7 @@ spec:
         - name: volume-permissions
           image: docker.io/bitnami/bitnami-shell:10-debian-10-r265
           command: ['sh', '-c', 'chown -R 999:999 /ssl/rabbitmq']
+          volumeMounts:
           - name: rabbitmq
             mountPath: /ssl/rabbitmq
         - name: init-operation-center
