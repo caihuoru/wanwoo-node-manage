@@ -6,7 +6,7 @@ deployment:
   replicas: 1 # 副本数量
   existingPersistentVolumeClaim: 
     file: uecm-nodejs
-    rabbitmq: rabbitmq-pvc
+    rabbitmq: uecm-rabbitmq-certificate
 configMap:
   name: nodejs-manage # 配置名
 
