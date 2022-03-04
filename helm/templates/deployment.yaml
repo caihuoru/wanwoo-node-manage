@@ -74,8 +74,9 @@ spec:
               - key: config.cloud.js
                 path: config.cloud.js
         - name: rabbitmq
-          persistentVolumeClaim:
-            claimName: {{ .Values.deployment.existingPersistentVolumeClaim.rabbitmq }}
+          hostPath:
+            path: /ww/applications/basicComps/rabbitmq
+            type: Directory
         - name: download
           hostPath:
             path: /mnt/download

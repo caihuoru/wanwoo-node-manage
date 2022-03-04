@@ -1,10 +1,10 @@
 const Minio = require('minio')
 const minioClient = new Minio.Client({
     // endPoint: '172.18.5.171',
-    endPoint: '127.0.0.1',
+    endPoint: 'k8s-oss-minio.default',
     port: 9000,
     useSSL: false,
-    accessKey: 'minio',
+    accessKey: 'admin',
     secretKey: 'Wanwoo@123'
 });
 
