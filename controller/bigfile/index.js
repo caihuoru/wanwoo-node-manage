@@ -1,5 +1,6 @@
 const fse = require('fs-extra');
 const path = require('path'); // 图片路径
+const minio = require('../../plugin/minio');
 module.exports = {
     //上传分片
     updateFile: async (ctx, next) => {
@@ -66,5 +67,43 @@ module.exports = {
             await fse.move(`./public/share/${name}`, `/mnt/download/${name}`, { overwrite: true })
         }
         ctx.success({ url: `/mnt/download/${name}` })
+    },
+    //合并切片
+    mergeFileOss: async (ctx, next) => {
+        const { name } = ctx.request.body
+        const fname = name.split('.')[0]
+        const chunkDir = path.join(`./public/share/temp/`, fname)
+        const chunks = await fse.readdir(chunkDir)
+        chunks.sort((a, b) => a - b)
+        for(let i = 0; i < chunks.length; i++){
+            const chunkPath = chunks[i];
+            // 合并文件
+            await fse.appendFileSync(
+                path.join(`./public/share/`, name),
+                fse.readFileSync(`${chunkDir}/${chunkPath}`)
+            )
+        }
+        const bucketName = 'uecm-download';
+        await fse.removeSync(chunkDir)
+        
+        // 验证储存桶， 不存在则去创建
+        const getBucket = await minio.bucketExistsOrmakeBucket(bucketName);
+        if(!getBucket){
+            // 创建存储桶
+            await minio.makeBucket(bucketName, 'us-east-1');
+            await minio.setBucketPolicy(bucketName);
+        }
+        
+        // 生成存储名字
+        const fileName = name.split('.');
+        fileName[0] =  `${fileName[0]}-${new Date().getTime()}`;
+        const bucketFileName = fileName.join('.');
+
+        // 上传文件到储存桶
+        await minio.putObject(bucketName, bucketFileName, fse.createReadStream(`./public/share/${name}`), () => {
+            // 删除
+            fse.remove(`./public/share/${name}`)
+        })      
+        ctx.success({ url: `/k8s-oss/${bucketName}/${bucketFileName}` })
     }
 }
