@@ -58,8 +58,6 @@ spec:
             - name: rabbitmq
               mountPath: /ssl/rabbitmq
               readOnly: true
-            - name: rfid-upload
-              mountPath: /node/public/upload
             - name: download
               mountPath: /mnt/download
       volumes:
@@ -81,10 +79,6 @@ spec:
         - name: download
           hostPath:
             path: /mnt/download
-            type: Directory
-        - name: rfid-upload
-          hostPath:
-            path: /mnt/download/node/rfid/upload
             type: Directory
       initContainers:
         - name: volume-permissions
