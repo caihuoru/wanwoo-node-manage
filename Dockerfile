@@ -3,6 +3,8 @@ FROM node:14.17.0-slim
 LABEL Jvan <18146628322@189.cn>
 # 工作区
 WORKDIR  /opt/node_app          
+# 复制mc
+COPY ./bin/mc /usr/local/bin/mc
 # 拷贝代码进镜像
 COPY . .
 # 删除多余文件并安装依赖

@@ -10,6 +10,12 @@ deployment:
 configMap:
   name: nodejs-manage # 配置名
 
+minio:
+  path: http://k8s-oss-minio.default:9000
+  rootPassword: Wanwoo@123
+  rootUser: admin
+
+
 service:
   name: nodejs-manage # Service服务名
   ##

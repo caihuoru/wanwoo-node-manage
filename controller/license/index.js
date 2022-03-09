@@ -115,7 +115,7 @@ module.exports ={
                 setTimeout(()=>{reslove()},10000)
             })
             ossPath = `${bucketName}/license/${bucketFileName}`;
-            ctx.success({ url: `/k8s-oss/${ossPath}` })
+            ctx.success({ url: `${ossPath}` })
         }else{
             ctx.fail('系统错误',500)
         }

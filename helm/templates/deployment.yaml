@@ -18,6 +18,7 @@ spec:
       #   - name: docker-registry-secret
       containers:
         - name: {{ .Values.deployment.name }}
+          command: ["sh", "-c", "mc config host add minio {{ .Values.minio.path }} {{ .Values.minio.rootUser }} {{ .Values.minio.rootPassword }} --api s3v4 && mkdir /ssl && mkdir /ssl/rabbitmq && mkdir /ssl/https && mc mirror minio/uecm-ssl/rabbitmq /ssl/rabbitmq && mc mirror minio/uecm-ssl/https /ssl/https && yarn && yarn start"]
           image: '{{ .Values.deployment.image }}:{{ .Values.deployment.imageTag }}' # 镜像版本
           imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
           ports:
@@ -55,11 +56,6 @@ spec:
             - name: config-cloud-js
               mountPath: /opt/node_app/config/config.cloud.js
               subPath: config.cloud.js
-            - name: rabbitmq
-              mountPath: /ssl/rabbitmq
-              readOnly: true
-            - name: download
-              mountPath: /mnt/download
       volumes:
         - name: config-index-js
           configMap:
@@ -73,21 +69,10 @@ spec:
             items:
               - key: config.cloud.js
                 path: config.cloud.js
-        - name: rabbitmq
-          hostPath:
-            path: /ww/applications/basicComps/rabbitmq
-            type: Directory
-        - name: download
-          hostPath:
-            path: /mnt/download
-            type: Directory
       initContainers:
-        - name: volume-permissions
-          image: docker.io/bitnami/bitnami-shell:10-debian-10-r265
-          command: ['sh', '-c', 'chown -R 999:999 /ssl/rabbitmq']
-          volumeMounts:
-          - name: rabbitmq
-            mountPath: /ssl/rabbitmq
+        - name: wait-for-init-oss-files
+          image: k8s-kubectl:1.0.0 
+          command: ['sh', '-c', 'kubectl wait --timeout=-1s --for=condition=Complete job/init-oss-files --namespace=default']
         - name: init-operation-center
           image: k8s-wait-for-endpoint:1.0.0
           args: ['--name=operation-center', '--namespace={{ .Release.Namespace }}']
