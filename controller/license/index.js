@@ -70,7 +70,7 @@ module.exports ={
     //上传分片
     updateLicenseOss: async(ctx, next) =>{
         const { ip } = ctx.request
-
+        let ossPath = '';
         const adminToken = ctx.header['admin-token']
         const moduleKey = ctx.header['modulekey']
         const userKey = 'authLocal:user:token:'
@@ -107,14 +107,15 @@ module.exports ={
             const bucketFileName = fileName.join('.');
 
             // 上传文件到储存桶
-            await minio.putObject(bucketName, bucketFileName, fse.createReadStream(`${ctx.request.files.file.path}`), () => {
+            await minio.putObject(bucketName, `/license/${bucketFileName}`, fse.createReadStream(`${ctx.request.files.file.path}`), () => {
                 // 删除
                 // fse.remove(`./public/share/license/${bucketFileName}`)
             })      
             await new Promise(function(reslove){
                 setTimeout(()=>{reslove()},10000)
             })
-            ctx.success({ url: `/k8s-oss/${bucketName}/${bucketFileName}` })
+            ossPath = `${bucketName}/license/${bucketFileName}`;
+            ctx.success({ url: `/k8s-oss/${ossPath}` })
         }else{
             ctx.fail('系统错误',500)
         }
@@ -131,6 +132,7 @@ module.exports ={
             userName: userInfo.userName,
             groupCode: userInfo.groupCode,
             groupName: userInfo.groupName,
+            ossPath,
             uri: ctx.request.url,
             optionName: '更新License授权文件',
             optionType: 'UPDATA',

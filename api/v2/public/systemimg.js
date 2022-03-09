@@ -1,7 +1,7 @@
 var router = require('koa-router')()
 const datalize = require('datalize');
 const field = datalize.field;
-const { updatetopath } = require('../../../controller/systemimg/index');
+const { updatetopathOss } = require('../../../controller/systemimg/index');
 router
 .post('/update',datalize([
     field('name').required(), //文件名
@@ -9,7 +9,7 @@ router
     field('content').required().isBase64(), //文件base64
 ]),async (ctx, next) => {
     try {
-        await updatetopath(ctx, next);
+        await updatetopathOss(ctx, next);
     } catch (error) {
         ctx.fail('系统错误',500,error.message)
     }
