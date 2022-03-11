@@ -46,7 +46,8 @@
     "ssh2": "0.8.9",
     "toad-scheduler": "1.4.0",
     "user-agents": "1.0.697",
-    "utf8": "3.0.0"
+    "utf8": "3.0.0",
+    "@kubernetes/client-node": ""
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

@@ -1,6 +1,7 @@
 const fse = require('fs-extra');
 const path = require('path'); // 图片路径
 const dayjs = require('dayjs');
+const k8s = require('@kubernetes/client-node');
 const minio = require('../../plugin/minio');
 
 module.exports ={
@@ -69,6 +70,18 @@ module.exports ={
     },
     //上传分片
     updateLicenseOss: async(ctx, next) =>{
+        const kc = new k8s.KubeConfig();
+        kc.loadFromDefault();
+
+        const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
+        const k8sApiResult = await k8sApi.listNamespacedPod('default')
+        const nodeIpList = []
+        // 获取集群节点ip
+        k8sApiResult.body?.items?.map(item => {
+            if(!nodeIpList.includes(item.status.hostIP)){
+                nodeIpList.push(item.status.hostIP)
+            }
+        })
         const { ip } = ctx.request
         let ossPath = '';
         const adminToken = ctx.header['admin-token']
@@ -91,34 +104,35 @@ module.exports ={
                 userInfo.groupName = userGroupInfo.name
             }
         }
-        if(fse.existsSync('/mnt/download')){
-            const bucketName = 'uecm-license';
-            
-            // 验证储存桶， 不存在则去创建
-            const getBucket = await minio.bucketExistsOrmakeBucket(bucketName);
-            if(!getBucket){
-                // 创建存储桶
-                await minio.makeBucket(bucketName, 'us-east-1');
-                await minio.setBucketPolicy(bucketName);
-            }
-            // 生成存储名字
-            const fileName = name.split('.');
-            fileName[0] =  `${fileName[0]}-${new Date().getTime()}`;
-            const bucketFileName = fileName.join('.');
+        const bucketName = 'uecm-license';
+        
+        // 验证储存桶， 不存在则去创建
+        const getBucket = await minio.bucketExistsOrmakeBucket(bucketName);
+        if(!getBucket){
+            // 创建存储桶
+            await minio.makeBucket(bucketName, 'us-east-1');
+            await minio.setBucketPolicy(bucketName);
+        }
+        // 生成存储名字
+        // const fileName = name.split('.');
+        // fileName[0] =  `${fileName[0]}-${new Date().getTime()}`;
+        // const bucketFileName = fileName.join('.');
+        // 与c和java商量后，决定把授权文件名固定下来
+        const bucketFileName = 'uecm_license.lid'
 
-            // 上传文件到储存桶
-            await minio.putObject(bucketName, `/license/${bucketFileName}`, fse.createReadStream(`${ctx.request.files.file.path}`), () => {
+        for(let i=0; i<nodeIpList.length; i++){
+            // 上传文件到储存桶并创建ip文件夹
+            await minio.putObject(bucketName, `/${nodeIpList[i]}/${bucketFileName}`, fse.createReadStream(`${ctx.request.files.file.path}`), () => {
                 // 删除
                 // fse.remove(`./public/share/license/${bucketFileName}`)
             })      
-            await new Promise(function(reslove){
-                setTimeout(()=>{reslove()},10000)
-            })
-            ossPath = `${bucketName}/license/${bucketFileName}`;
-            ctx.success({ url: `${ossPath}` })
-        }else{
-            ctx.fail('系统错误',500)
         }
+        
+        await new Promise(function(reslove){
+            setTimeout(()=>{reslove()},10000)
+        })
+        ossPath = `${bucketFileName}`;
+        ctx.success({ url: `${ossPath}`, ipList: nodeIpList })
 
         let optionResult = '失败'
         if (ctx.request.response.status >= 200 && ctx.request.response.status < 300) {
