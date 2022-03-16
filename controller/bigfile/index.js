@@ -97,8 +97,9 @@ module.exports = {
         // 生成存储名字
         const fileName = name.split('.');
         fileName[0] =  `${fileName[0]}-${new Date().getTime()}`;
-        const bucketFileName = fileName.join('.');
-
+        let bucketFileName = fileName.join('.');
+        // 暂时去掉括号
+        bucketFileName = bucketFileName.split('(')?.join('')?.split(')')?.join('') || bucketFileName;
         // 上传文件到储存桶
         await minio.putObject(bucketName, bucketFileName, fse.createReadStream(`./public/share/${name}`), () => {
             // 删除
