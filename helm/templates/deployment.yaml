@@ -44,6 +44,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+          livenessProbe:
+            tcpSocket: 
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 60
+            periodSeconds: 120
+          readinessProbe: 
+            tcpSocket: 
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
           resources:
             limits:
               memory: 2500Mi

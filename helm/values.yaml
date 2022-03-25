@@ -1,12 +1,16 @@
 deployment:
   name: nodejs-manage # 部署名
   image: registry.iottepa.local/iottepa-node-main-manage # 镜像版本
-  imageTag: 6.1.1-rc9
+  imageTag: 6.1.1-rc24
   imagePullPolicy: IfNotPresent # 镜像拉取策略
   replicas: 1 # 副本数量
   existingPersistentVolumeClaim: 
     file: uecm-nodejs
     rabbitmq: uecm-rabbitmq-certificate
+
+app:
+  REDIS_TEYP: standalone
+
 configMap:
   name: nodejs-manage # 配置名
 
