@@ -18,7 +18,7 @@ const bucketExistsOrmakeBucket = (bucketName) => {
 }
 // 上传文件
 const putObject = (bucketName, objectName, stringOrBuffer, callback, ) => {
-    return minioClient.putObject(bucketName, objectName, stringOrBuffer, 1024 * 30, callback)
+    return minioClient.putObject(bucketName, objectName, stringOrBuffer, 'application/octet-stream', callback)
 }
 // 设置存储桶策略
 const setBucketPolicy = (bucketName) => {

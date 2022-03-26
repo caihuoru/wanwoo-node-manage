@@ -125,9 +125,7 @@ module.exports = {
         // 暂时去掉括号
         bucketFileName = bucketFileName.split('(')?.join('\\u0028')?.split(')')?.join('\\u0029') || bucketFileName;
         // 上传文件到储存桶
-        await minio.putObject(bucketName, bucketFileName, fse.createReadStream(`${ctx.request.files.file.path}`), () => {
-            // 删除
-        })      
-        ctx.success({ url: `/k8s-oss/${bucketName}/${bucketFileName}` })
+        const result = await minio.putObject(bucketName, bucketFileName, fse.createReadStream(`${ctx.request.files.file.path}`))      
+        ctx.success({ url: `/k8s-oss/${bucketName}/${bucketFileName}`, result })
     }
 }
