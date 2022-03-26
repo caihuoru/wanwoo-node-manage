@@ -106,5 +106,28 @@ module.exports = {
             fse.remove(`./public/share/${name}`)
         })      
         ctx.success({ url: `/k8s-oss/${bucketName}/${bucketFileName}` })
+    },
+    ossMultipartUpload: async (ctx, next) => {
+        
+        const bucketName = 'uecm-download';
+        const name = ctx.request.files.file.name;
+        // 验证储存桶， 不存在则去创建
+        const getBucket = await minio.bucketExistsOrmakeBucket(bucketName);
+        if(!getBucket){
+            // 创建存储桶
+            await minio.makeBucket(bucketName, 'us-east-1');
+            await minio.setBucketPolicy(bucketName);
+        }
+        // 生成存储名字
+        const fileName = name.split('.');
+        fileName[0] =  `${fileName[0]}-${new Date().getTime()}`;
+        let bucketFileName = fileName.join('.');
+        // 暂时去掉括号
+        bucketFileName = bucketFileName.split('(')?.join('\\u0028')?.split(')')?.join('\\u0029') || bucketFileName;
+        // 上传文件到储存桶
+        await minio.putObject(bucketName, bucketFileName, fse.createReadStream(`${ctx.request.files.file.path}`), () => {
+            // 删除
+        })      
+        ctx.success({ url: `/k8s-oss/${bucketName}/${bucketFileName}` })
     }
 }
