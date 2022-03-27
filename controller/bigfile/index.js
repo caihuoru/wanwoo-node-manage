@@ -122,8 +122,8 @@ module.exports = {
         let bucketFileName = fileName.join('.');
         // 暂时去掉括号
         bucketFileName = bucketFileName.split('(')?.join('')?.split(')')?.join('') || bucketFileName;
-        const ossUploadurl = await minio.presignedPutObject(bucketName, bucketFileName)
-        ossUploadurl.split('http://k8s-oss-minio.default:9000').join('/k8s-oss')
+        let ossUploadurl = await minio.presignedPutObject(bucketName, bucketFileName)
+        ossUploadurl = ossUploadurl.split('http://k8s-oss-minio.default:9000').join('/k8s-oss')
         ctx.success({ ossUploadurl, url: `/k8s-oss/${bucketName}/${bucketFileName}` })
     }
 }
