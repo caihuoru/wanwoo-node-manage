@@ -33,7 +33,7 @@ app.use(body({
   multipart: true, // 支持文件上传
   formidable:{
     keepExtensions: true,    // 保持文件的后缀
-    maxFileSize:20 * 1024 * 1024, // 文件上传大小
+    maxFileSize:200 * 1024 * 1024, // 文件上传大小
   }
 }))
 app.use(json({ limit: '50mb' }))
