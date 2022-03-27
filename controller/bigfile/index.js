@@ -107,10 +107,8 @@ module.exports = {
         })      
         ctx.success({ url: `/k8s-oss/${bucketName}/${bucketFileName}` })
     },
-    ossMultipartUpload: async (ctx, next) => {
-        
+    getOssUploadUrl: async (ctx, next) => {
         const bucketName = 'uecm-download';
-        const name = ctx.request.files.file.name;
         // 验证储存桶， 不存在则去创建
         const getBucket = await minio.bucketExistsOrmakeBucket(bucketName);
         if(!getBucket){
@@ -119,13 +117,13 @@ module.exports = {
             await minio.setBucketPolicy(bucketName);
         }
         // 生成存储名字
-        const fileName = name.split('.');
+        const fileName = ctx.request.body.name.split('.');
         fileName[0] =  `${fileName[0]}-${new Date().getTime()}`;
         let bucketFileName = fileName.join('.');
         // 暂时去掉括号
-        bucketFileName = bucketFileName.split('(')?.join('\\u0028')?.split(')')?.join('\\u0029') || bucketFileName;
-        // 上传文件到储存桶
-        const result = await minio.putObject(bucketName, bucketFileName, fse.createReadStream(`${ctx.request.files.file.path}`))      
-        ctx.success({ url: `/k8s-oss/${bucketName}/${bucketFileName}`, result })
+        bucketFileName = bucketFileName.split('(')?.join('')?.split(')')?.join('') || bucketFileName;
+        const ossUploadurl = await minio.presignedPutObject(bucketName, bucketFileName)
+        ossUploadurl.split('http://k8s-oss-minio.default:9000').join('/k8s-oss')
+        ctx.success({ ossUploadurl, url: `/k8s-oss/${bucketName}/${bucketFileName}` })
     }
 }

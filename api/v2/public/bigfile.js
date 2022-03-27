@@ -1,5 +1,5 @@
 var router = require('koa-router')()
-const { updateFile, ossMultipartUpload } = require('../../../controller/bigfile/index');
+const { updateFile, mergeFileOss, getOssUploadUrl } = require('../../../controller/bigfile/index');
 router
 .post('/upload', async (ctx, next) => {
     try {
@@ -10,7 +10,15 @@ router
   })
   .post('/merge', async (ctx, next) => {
     try {
-        await ossMultipartUpload(ctx, next);
+        await mergeFileOss(ctx, next);
+        next()
+    } catch (error) {
+        ctx.fail('系统错误',500,error.message)
+    }
+  })
+  .post('/getOssUploadUrl', async (ctx, next) => {
+    try {
+        await getOssUploadUrl(ctx, next);
         next()
     } catch (error) {
         ctx.fail('系统错误',500,error.message)
