@@ -70,18 +70,7 @@ module.exports ={
     },
     //上传分片
     updateLicenseOss: async(ctx, next) =>{
-        const kc = new k8s.KubeConfig();
-        kc.loadFromDefault();
-
-        const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-        const k8sApiResult = await k8sApi.listNamespacedPod('default')
-        const nodeIpList = []
-        // 获取集群节点ip
-        k8sApiResult.body?.items?.map(item => {
-            if(!nodeIpList.includes(item.status.hostIP)){
-                nodeIpList.push(item.status.hostIP)
-            }
-        })
+       
         const { ip } = ctx.request
         let ossPath = '';
         const adminToken = ctx.header['admin-token']
@@ -91,7 +80,7 @@ module.exports ={
         const gropInfoKey = 'authLocal:groupInfo'
         const userInfo = {}
         const visitIp = ip.replace('::ffff:', '');
-        const name = ctx.request.files.file.name;
+        // const name = ctx.request.files.file.name;
         if (adminToken) {
             const refreshToken = adminToken.split(" ")[0];
             const userName = await ctx.redisStore.get(userKey + refreshToken)
@@ -119,20 +108,18 @@ module.exports ={
         // const bucketFileName = fileName.join('.');
         // 与c和java商量后，决定把授权文件名固定下来
         const bucketFileName = 'uecm_license.lid'
-
-        for(let i=0; i<nodeIpList.length; i++){
-            // 上传文件到储存桶并创建ip文件夹
-            await minio.putObject(bucketName, `/${nodeIpList[i]}/${bucketFileName}`, fse.createReadStream(`${ctx.request.files.file.path}`), () => {
-                // 删除
-                // fse.remove(`./public/share/license/${bucketFileName}`)
-            })      
-        }
+        // 上传文件到储存桶并创建ip文件夹
+        await minio.putObject(bucketName, `/${ctx.request.body.ip}/${bucketFileName}`, fse.createReadStream(`${ctx.request.files.file.path}`), () => {
+            // 删除
+            // fse.remove(`./public/share/license/${bucketFileName}`)
+        })      
+        
         
         await new Promise(function(reslove){
             setTimeout(()=>{reslove()},10000)
         })
         ossPath = `${bucketFileName}`;
-        ctx.success({ url: `${ossPath}`, ipList: nodeIpList })
+        ctx.success({ url: `${ossPath}` })
 
         let optionResult = '失败'
         if (ctx.request.response.status >= 200 && ctx.request.response.status < 300) {
@@ -163,4 +150,19 @@ module.exports ={
             console.log('发送成功')
         }
     },
+    getIpList: async(ctx, next) =>{
+        const kc = new k8s.KubeConfig();
+        kc.loadFromDefault();
+
+        const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
+        const k8sApiResult = await k8sApi.listNamespacedPod('default')
+        const nodeIpList = []
+        // 获取集群节点ip
+        k8sApiResult.body?.items?.map(item => {
+            if(!nodeIpList.includes(item.status.hostIP)){
+                nodeIpList.push(item.status.hostIP)
+            }
+        })
+        ctx.success({ ipList: nodeIpList })
+    }
 }
