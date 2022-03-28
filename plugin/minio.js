@@ -40,10 +40,17 @@ const setBucketPolicy = (bucketName) => {
     }))
 }
 
+const presignedPutObject =  (bucketName, objectName, expiry ) => {
+    // 默认一小时
+    expiry = expiry || 1*60*60;
+    return minioClient.presignedPutObject(bucketName, objectName, expiry)
+}
+
 
 module.exports = {
     makeBucket,
     bucketExistsOrmakeBucket,
     putObject,
-    setBucketPolicy
+    setBucketPolicy,
+    presignedPutObject
 }
