@@ -45,11 +45,11 @@ data:
         RABBITMQ_KEYFILEPATH: "/ssl/rabbitmq/server_key.pem",
         RABBITMQ_PASSPHRASE: "Wanwoo@123",
         RABBITMQ_CAFILEPATH: "/ssl/rabbitmq/ca_certificate.pem",
-        RD_FAMILY: 4,
+        RD_FAMILY: {{ .Values.app.RD_FAMILY }},
         RD_PASSWORD: "",
-        RD_DB: 0,
+        RD_DB: {{ .Values.app.RD_DB }},
         PREFIX_IP_ADDRESS: "10.", // ip前缀
-        RD_NAME: 'wanwoomaster',
+        RD_NAME: "{{ .Values.app.RD_NAME }}",
         REDIS_MEMBERS: [{"port":6379, "host":"redis-master.iottepa"}],
         // 三种接入模式 standalone(单机模式) sentinel(哨兵模式) cluster(集群模式)，默认是standalone
         REDIS_TEYP: "{{ .Values.app.REDIS_TEYP }}",
