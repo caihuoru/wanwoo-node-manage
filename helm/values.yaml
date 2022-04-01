@@ -9,11 +9,31 @@ deployment:
     rabbitmq: uecm-rabbitmq-certificate
 
 app:
+  DB_HOST: mysql-headless.iottepa
+  DB_NAME: Galaxy
+  DB_PORT: 3306
+  DB_USER: root
+  DB_PASSWORD: 123456
+  DB_UNSECURE: true
   RD_FAMILY: 4
   RD_DB: 0
   RD_NAME: wanwoomaster
   # 三种接入模式 standalone(单机模式) sentinel(哨兵模式) cluster(集群模式)，默认是standalone
   REDIS_TEYP: standalone
+  RABBITMQ_HOSTNAME: rabbitmq-headless.iottepa
+  RABBITMQ_PORT: 5671
+  RABBITMQ_USERNAME: admin
+  RABBITMQ_PASSWORD: Wanwoo@123
+  RABBITMQ_PROTOCOL: amqps
+  RABBITMQ_LOCALE: zh-CN
+  RABBITMQ_FRAMEMAX: 0
+  RABBITMQ_HEARTBEAT: 0
+  RABBITMQ_VHOST: /
+  RABBITMQ_SSl: true
+  RABBITMQ_CERTFILEPATH: /ssl/rabbitmq/server_certificate.pem
+  RABBITMQ_KEYFILEPATH: /ssl/rabbitmq/server_key.pem
+  RABBITMQ_PASSPHRASE: Wanwoo@123
+  RABBITMQ_CAFILEPATH: /ssl/rabbitmq/ca_certificate.pem
 
 configMap:
   name: nodejs-manage # 配置名
