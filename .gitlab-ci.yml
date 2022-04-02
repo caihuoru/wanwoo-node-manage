@@ -1,3 +1,4 @@
 include:
-  - project: 'share/ci-template'
+  - project: $CI_TEMPLATE_PATH
     file: '/uecm/gitlab-ci-node.yml'
+

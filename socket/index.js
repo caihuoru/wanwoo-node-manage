@@ -4,10 +4,11 @@
  */
 const IO = require('socket.io')
 const { createNewServer } = require('./sshService')
-const redisAdapter = require("socket.io-redis");
-const { redisStore } = require('../plugin/redis');
-const logUtil = require('../plugin/log4j');
-const Redis = require('ioredis');
+const { redisStore, redisSocket } = require('../plugin/redis');
+const redisAdapter = require('socket.io-redis');
+// 下面这个插件在我们的业务下不可用（别问我怎么知道的）
+// const { createAdapter } = require("@socket.io/redis-adapter");
+// const redisAdapter = require('@socket.io/redis-adapter');
 function creatSocket(app, koa) {
   /**
      * 系统升级检查服务及系统状态
@@ -24,26 +25,15 @@ function creatSocket(app, koa) {
     //   credentials: true
     // }
   })
-  // if (Array.isArray(global.REDIS_MEMBERS)) {
-  //   const MEMBERS = global.REDIS_MEMBERS.map(irm => {
-  //     return {
-  //       port: irm.port, // Redis port
-  //       host: irm.host, // Redis host
-  //       family: global.RD_FAMILY,
-  //       db: global.RD_DB
-  //     }
-  //   })
-  //   if (MEMBERS.length != 1) {
-  //     koa.context.CheckSystem.adapter(
-  //       redisAdapter({
-  //         pubClient: redisStore.redis,
-  //         subClient: redisStore.redis
-  //       })
-  //     );
-  //   }
-  // } else {
-  //   logUtil.pluginLogger.info('Redis', 'connect', 'redis参数异常！')
-  // }
+
+    // const { port, host } = global.REDIS_MEMBERS[0];
+    // 目前连接方式只能是单机
+    // const pubClient = redisStore.redis;
+    // const subClient = pubClient.duplicate();
+    // koa.context.CheckSystem.adapter(createAdapter(pubClient, subClient));
+  const { host, port } = global.REDIS_MEMBERS[0];
+  koa.context.CheckSystem.adapter(redisAdapter({ host, port }));
+  
   koa.context.CheckSystem.on("connection", async function (clientSocket) {
     const  AdminToken = clientSocket.handshake.query?.AdminToken
     if (AdminToken) {
@@ -75,7 +65,7 @@ function creatSocket(app, koa) {
       koa.context.socketUser.push(userInfo)
     }
     const systemStatus = await redisStore.get('system:status')
-    clientSocket.emit('system-status', systemStatus)
+    redisSocket.emit('system-status', systemStatus)
     clientSocket.on('disconnect', function (e) {
       console.log('user disconnected', e);
       // 用户离开时清除
