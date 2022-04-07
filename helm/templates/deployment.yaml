@@ -80,9 +80,9 @@ spec:
               - key: config.cloud.js
                 path: config.cloud.js
       initContainers:
-        - name: wait-for-init-oss-files
+        - name: wait-for-uecm-share-init-oss-files
           image: k8s-kubectl:1.0.0 
-          command: ['sh', '-c', 'kubectl wait --timeout=-1s --for=condition=Complete job/init-oss-files --namespace=default']
+          command: ['sh', '-c', 'kubectl wait --timeout=-1s --for=condition=Complete job/uecm-share-init-oss-files --namespace=default']
         - name: init-operation-center
           image: k8s-wait-for-endpoint:1.0.0
           args: ['--name=operation-center', '--namespace={{ .Release.Namespace }}']
