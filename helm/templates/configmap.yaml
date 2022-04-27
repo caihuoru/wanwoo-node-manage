@@ -50,7 +50,7 @@ data:
         RD_DB: {{ .Values.app.RD_DB }},
         PREFIX_IP_ADDRESS: "10.", // ip前缀
         RD_NAME: "{{ .Values.app.RD_NAME }}",
-        REDIS_MEMBERS: [{"port":6379, "host":"redis-master.iottepa"}],
+        REDIS_MEMBERS: {{ .Values.app.REDIS_MEMBERS }},
         // 三种接入模式 standalone(单机模式) sentinel(哨兵模式) cluster(集群模式)，默认是standalone
         REDIS_TEYP: "{{ .Values.app.REDIS_TEYP }}",
         // 持久化开始标识符（勿删）
