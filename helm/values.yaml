@@ -56,18 +56,3 @@ service:
   port: 80 # Service服务端口
   targetPort: 18701 # POD端口
 
-
-#  哨兵模式
-helm install nodejs-public http://helm.iottepa.cn/charts/uecm-nodejs-public-6.1.1-rc30.tgz \
-    --namespace uecm --create-namespace \
-    --set deployment.replicas=1
-    --set app.REDIS_TEYP=sentinel
-    --set app.REDIS_MEMBERS="[{port:26379, host:'redis-node-0.redis-headless.iottepa.svc.cluster.local'},{port:26379, host:'redis-node-1.redis-headless.iottepa.svc.cluster.local'},{port:26379, host:'redis-node-2.redis-headless.iottepa.svc.cluster.local'}]"
-
-
-# 单机模式
-helm install nodejs-public http://helm.iottepa.cn/charts/uecm-nodejs-public-6.1.1-rc30.tgz \
-    --namespace uecm --create-namespace \
-    --set deployment.replicas=1
-    --set app.REDIS_TEYP=standalone
-    --set app.REDIS_MEMBERS="[{port:26379, host:'redis-node-redis-headless.iottepa.svc.cluster.local'}]"
