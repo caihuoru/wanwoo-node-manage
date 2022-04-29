@@ -19,8 +19,8 @@ app:
   RD_DB: 0
   RD_NAME: wanwoomaster
   # 三种接入模式 standalone(单机模式) sentinel(哨兵模式) cluster(集群模式)，默认是standalone
-  REDIS_TEYP: standalone
-  REDIS_MEMBERS: "[{port:6379, host:'redis-master.iottepa'}]"
+  REDIS_TEYP: sentinel
+  REDIS_MEMBERS: "[{port:26379, host:'redis-headless.iottepa'}]"
   RABBITMQ_HOSTNAME: rabbitmq-headless.iottepa
   RABBITMQ_PORT: 5671
   RABBITMQ_USERNAME: admin
