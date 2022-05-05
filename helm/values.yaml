@@ -1,7 +1,7 @@
 deployment:
   name: nodejs-manage # 部署名
   image: docker.iottepa.cn:32011/uecm-nodejs-manage # 镜像版本
-  imageTag: 6.1.1-rc27
+  imageTag: 6.1.1-rc39
   imagePullPolicy: IfNotPresent # 镜像拉取策略
   replicas: 1 # 副本数量
   existingPersistentVolumeClaim: 
@@ -20,7 +20,7 @@ app:
   RD_NAME: wanwoomaster
   # 三种接入模式 standalone(单机模式) sentinel(哨兵模式) cluster(集群模式)，默认是standalone
   REDIS_TEYP: sentinel
-  REDIS_MEMBERS: "[{port:26379, host:'redis-headless.iottepa'}]"
+  REDIS_MEMBERS: "[{port:6379, host:'redis-headless.iottepa'}]"
   RABBITMQ_HOSTNAME: rabbitmq-headless.iottepa
   RABBITMQ_PORT: 5671
   RABBITMQ_USERNAME: admin
