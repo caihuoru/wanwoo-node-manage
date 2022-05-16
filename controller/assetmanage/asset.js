@@ -38,6 +38,17 @@ module.exports = {
                       {
                         key: "2",
                         disabled: false,
+                        name: "mac地址",
+                        title: "mac地址",
+                        slotName: "assetInormation.mac",
+                        dataIndex: "mac",
+                        scopedSlots: { customRender: "mac", title: "mac地址" },
+                        sorter: true,
+                        width: 170,
+                      },
+                      {
+                        key: "3",
+                        disabled: false,
                         name: "资产名称",
                         title: "资产名称",
                         slotName: "assetInormation.assetName",
@@ -46,7 +57,7 @@ module.exports = {
                         sorter: true,
                       },
                       {
-                        key: "3",
+                        key: "4",
                         disabled: false,
                         name: "设备序列号",
                         title: "设备序列号",
@@ -56,7 +67,7 @@ module.exports = {
                         sorter: true,
                       },
                       {
-                        key: "4",
+                        key: "5",
                         disabled: false,
                         name: "资产类型",
                         title: "资产类型",
@@ -66,7 +77,7 @@ module.exports = {
                         sorter: true,
                       },
                       {
-                        key: "5",
+                        key: "6",
                         disabled: false,
                         name: "品牌",
                         title: "品牌",
@@ -78,7 +89,7 @@ module.exports = {
                         },
                       },
                       {
-                        key: "6",
+                        key: "7",
                         disabled: false,
                         name: "型号",
                         title: "型号",
@@ -90,7 +101,7 @@ module.exports = {
                         },
                       },
                       {
-                        key: "7",
+                        key: "8",
                         disabled: false,
                         name: "组织架构",
                         title: "组织架构",
@@ -102,7 +113,7 @@ module.exports = {
                         },
                       },
                       {
-                        key:'7',
+                        key:'9',
                         disabled:false,
                         name: '挂账人',
                         title: "挂账人",
@@ -112,7 +123,7 @@ module.exports = {
                         sorter: true,
                       },
                       {
-                        key: "8",
+                        key: "10",
                         disabled: false,
                         name: "在线状态",
                         title: "在线状态",
@@ -124,7 +135,7 @@ module.exports = {
                       },
                       {
                   
-                        key: "9",
+                        key: "11",
                         disabled: false,
                         name: "阻断状态",
                         title: "阻断状态",
@@ -135,7 +146,7 @@ module.exports = {
                         sorter: true,
                       },
                       {
-                        key: "10",
+                        key: "12",
                         name: "操作",
                         title: "操作",
                         slotName: "assetInormation.action",
@@ -144,7 +155,7 @@ module.exports = {
                         scopedSlots: { customRender: "action" },
                       },
                       {
-                        key: "11",
+                        key: "13",
                         name: "引擎名称",
                         title: "引擎名称",
                         slotName: "assetInormation.ndName",
