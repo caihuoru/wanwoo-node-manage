@@ -14,6 +14,16 @@ spec:
       labels:
         app: {{ .Values.deployment.name }}
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - nodejs-manage
+            topologyKey: "kubernetes.io/hostname"
       # imagePullSecrets:
       #   - name: docker-registry-secret
       tolerations: 
