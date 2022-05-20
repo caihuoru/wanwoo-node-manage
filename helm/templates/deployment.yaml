@@ -22,7 +22,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - nodejs-manage
+                - {{ .Values.deployment.name }}
             topologyKey: "kubernetes.io/hostname"
       # imagePullSecrets:
       #   - name: docker-registry-secret
