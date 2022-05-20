@@ -165,6 +165,17 @@ module.exports = {
                           return text || "--";
                         },
                       },
+                      {
+                        key: "14",
+                        disabled: false,
+                        name: "操作系统发行版",
+                        title: "操作系统发行版",
+                        slotName: "assetInormation.systemVersion",
+                        dataIndex: "systemVersion",
+                        scopedSlots: { customRender: "systemVersion", title: "操作系统发行版" },
+                        sorter: true,
+                        width: 170,
+                      },
                 ]
             })
         }
