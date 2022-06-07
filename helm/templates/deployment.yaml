@@ -39,7 +39,7 @@ spec:
         - name: {{ .Values.deployment.name }}
           image: '{{ .Values.deployment.image }}:{{ .Values.deployment.imageTag }}' # 镜像版本
           imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
-          command: ["sh", "-c", "mc config host add minio {{ .Values.minio.path }} {{ .Values.minio.rootUser }} {{ .Values.minio.rootPassword }} --api s3v4 && mkdir /ssl && mkdir /ssl/rabbitmq && mkdir /ssl/https && mkdir /mnt/download && mc mirror minio/uecm-ssl/rabbitmq /ssl/rabbitmq && mc mirror minio/uecm-ssl/https /ssl/https && yarn && yarn start"]          
+          command: ["sh", "-c", "mc config host add minio {{ .Values.minio.path }} {{ .Values.minio.rootUser }} {{ .Values.minio.rootPassword }} --api s3v4 && mkdir /ssl && mkdir /ssl/rabbitmq && mkdir /ssl/https && mkdir /mnt/download && mc mirror minio/uecm-ssl/rabbitmq /ssl/rabbitmq && mc mirror minio/uecm-ssl/https /ssl/https && yarn start"]          
           ports:
             - containerPort: {{ .Values.service.targetPort }} # POD端口
           env:
