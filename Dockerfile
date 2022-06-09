@@ -10,6 +10,6 @@ RUN   chmod -R 777 /usr/local/bin/mc
 COPY . .
 # 时区
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone
-# 删除多余文件并安装依赖
+
 # CMD执行
 CMD ["yarn", "start"]
