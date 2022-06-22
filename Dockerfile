@@ -1,4 +1,4 @@
-FROM docker.iottepa.cn:32011/node-basic:1.0.0
+FROM docker.iottepa.cn:32011/node-basic:1.0.1
 # 镜像元信息
 LABEL Jvan <18146628322@189.cn>
 # 工作区
